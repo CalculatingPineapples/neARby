@@ -1,14 +1,14 @@
-var express = require('express')
+var express = require('express');
 var bodyParser = require('body-parser');
 var router = require('./routes');
 
-var app = express()
-var port = 3000
+var app = express();
+var port = 3000;
 
-app.use('/', router)
+app.use('/', router);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-server.listen(process.env.PORT || port);
+app.listen(process.env.PORT || port);
 console.log(`Listening on port ${port}`);
