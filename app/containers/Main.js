@@ -7,6 +7,7 @@ import {
   DeviceEventEmitter //DeviceEventEmitter is imported for geolocation update
 } from 'react-native';
 
+import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
 import Drawer from 'react-native-drawer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -235,9 +236,13 @@ class Main extends Component {
         type="overlay"
         ref={(ref) => this._drawer = ref}
         content={<View style={styles.panel}>
-        <Text style={styles.panelText}>WHERE'S THE CUBE???</Text></View>}
-        openDrawerOffset={100}
+        <LoginButton
+          publishPermissions={["publish_actions"]}
+          onLogoutFinished={() => alert('User logged out')}/>
+        </View>}
         acceptPan={true}
+        panOpenMask={0.5}
+        panCloseMask={0.5}
         tweenHandler={(ratio) => ({main: { opacity:(4-ratio)/4 }})}>
       <View style={{flex: 1}}>
         <Camera
@@ -327,8 +332,9 @@ const styles = StyleSheet.create({
 
   },
   panel: {
-    backgroundColor: '#FFF',
+    backgroundColor: 'rgba(255,255,255,.9)',
     justifyContent: 'center',
+    margin: 20,
     alignItems: 'flex-end',
     flexDirection: 'row',
     paddingBottom: 30,

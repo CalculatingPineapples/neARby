@@ -7,17 +7,15 @@ import {
   Navigator
 } from 'react-native';
 import Main from './Main';
+import Login from './Login';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from '../reducers/root-reducer';
 import wrapper from '../../index.ios.js';
 
 const ROUTES = {
-  Main: Main
-};
-
-const TITLES = {
-  Main: 'Main'
+  Main: Main,
+  Login: Login
 };
 
 class App extends Component {
@@ -34,7 +32,7 @@ class App extends Component {
   }
   render() {
     return (
-      <Navigator initialRoute={{ name: 'Main', index: 0 }}
+      <Navigator initialRoute={{ name: 'Login', index: 0 }}
       style={ styles.container }
       renderScene={ this.renderScene.bind(this) }
       configureScene={ () => {return Navigator.SceneConfigs.FloatFromRight;} } 

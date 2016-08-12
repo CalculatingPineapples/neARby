@@ -13,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* neARbyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* neARbyTests.m */; };
+		0AB2137E264A4532939E2EDB /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F5FC95B8D74B75A4287E61 /* libRCTFBSDK.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -24,6 +25,9 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3D940D3F1D5AA54E00DE3FDD /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 3D940D3E1D5AA54E00DE3FDD /* main.jsbundle */; };
 		5A9736ECFE3F450A8AFF3F28 /* libRNLocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1005F72039A74872B7A4C549 /* libRNLocation.a */; };
+		75051D5D1D5E53E100EF6E2B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75051D5A1D5E53E100EF6E2B /* FBSDKCoreKit.framework */; };
+		75051D5E1D5E53E100EF6E2B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75051D5B1D5E53E100EF6E2B /* FBSDKLoginKit.framework */; };
+		75051D5F1D5E53E100EF6E2B /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75051D5C1D5E53E100EF6E2B /* FBSDKShareKit.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		F1DD2FFBCAE84EF69C8E297E /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DE2D67C0A740459BD338F6 /* libRCTCamera.a */; };
 		F8BF2E1CE60A43D59A18DF57 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BD1CD4743147F09F6FF6CC /* libReact-Native-Webview-Bridge.a */; };
@@ -100,6 +104,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNLocation;
 		};
+		75051D7F1D5E5AD400EF6E2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51AC23505ED14E45A26C157F /* RCTFBSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
+			remoteInfo = RCTFBSDK;
+		};
 		75F9D18F1D53CDE00084069B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2B6FF09711147219991A613 /* RCTCamera.xcodeproj */;
@@ -154,10 +165,15 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		18D573095A624E31A0DC63C3 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		3D940D3E1D5AA54E00DE3FDD /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
+		51AC23505ED14E45A26C157F /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
+		75051D5A1D5E53E100EF6E2B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		75051D5B1D5E53E100EF6E2B /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		75051D5C1D5E53E100EF6E2B /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		91DE2D67C0A740459BD338F6 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		D2B6FF09711147219991A613 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		D9F5FC95B8D74B75A4287E61 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,17 +191,21 @@
 			files = (
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
+				75051D5E1D5E53E100EF6E2B /* FBSDKLoginKit.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
+				75051D5F1D5E53E100EF6E2B /* FBSDKShareKit.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				F1DD2FFBCAE84EF69C8E297E /* libRCTCamera.a in Frameworks */,
+				75051D5D1D5E53E100EF6E2B /* FBSDKCoreKit.framework in Frameworks */,
 				F8BF2E1CE60A43D59A18DF57 /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				5A9736ECFE3F450A8AFF3F28 /* libRNLocation.a in Frameworks */,
+				0AB2137E264A4532939E2EDB /* libRCTFBSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +315,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		75051D4C1D5E53CD00EF6E2B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75051D5A1D5E53E100EF6E2B /* FBSDKCoreKit.framework */,
+				75051D5B1D5E53E100EF6E2B /* FBSDKLoginKit.framework */,
+				75051D5C1D5E53E100EF6E2B /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		75051D7A1D5E5AD400EF6E2B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75051D801D5E5AD400EF6E2B /* libRCTFBSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		75F9D18B1D53CDE00084069B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,6 +373,7 @@
 				D2B6FF09711147219991A613 /* RCTCamera.xcodeproj */,
 				18D573095A624E31A0DC63C3 /* React-Native-Webview-Bridge.xcodeproj */,
 				09331BB2094544C8BA1998EB /* RNLocation.xcodeproj */,
+				51AC23505ED14E45A26C157F /* RCTFBSDK.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -350,6 +389,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				75051D4C1D5E53CD00EF6E2B /* Frameworks */,
 				13B07FAE1A68108700A75B9A /* neARby */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* neARbyTests */,
@@ -413,7 +453,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 730;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -444,6 +484,10 @@
 				{
 					ProductGroup = 75F9D18B1D53CDE00084069B /* Products */;
 					ProjectRef = D2B6FF09711147219991A613 /* RCTCamera.xcodeproj */;
+				},
+				{
+					ProductGroup = 75051D7A1D5E5AD400EF6E2B /* Products */;
+					ProjectRef = 51AC23505ED14E45A26C157F /* RCTFBSDK.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -560,6 +604,13 @@
 			fileType = archive.ar;
 			path = libRNLocation.a;
 			remoteRef = 3D6DA8621D5A887400204E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		75051D801D5E5AD400EF6E2B /* libRCTFBSDK.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTFBSDK.a;
+			remoteRef = 75051D7F1D5E5AD400EF6E2B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		75F9D1901D53CDE00084069B /* libRCTCamera.a */ = {
@@ -686,6 +737,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -706,6 +758,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -720,6 +773,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "~/Documents/FacebookSDK/**";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -727,6 +781,7 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
 					"$(SRCROOT)/../node_modules/react-native-location",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 				);
 				INFOPLIST_FILE = neARby/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -735,7 +790,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.calculatingpineapples.neARby;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.neARby7;
 				PRODUCT_NAME = neARby;
 				PROVISIONING_PROFILE = "";
 			};
@@ -747,6 +802,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "~/Documents/FacebookSDK/**";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -754,6 +810,7 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
 					"$(SRCROOT)/../node_modules/react-native-location",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 				);
 				INFOPLIST_FILE = neARby/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -762,7 +819,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.calculatingpineapples.neARby;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.neARby7;
 				PRODUCT_NAME = neARby;
 				PROVISIONING_PROFILE = "";
 			};
@@ -810,6 +867,7 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
 					"$(SRCROOT)/../node_modules/react-native-location",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -853,6 +911,7 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
 					"$(SRCROOT)/../node_modules/react-native-location",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

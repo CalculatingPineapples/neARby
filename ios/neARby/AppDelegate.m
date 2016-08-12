@@ -11,6 +11,7 @@
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @implementation AppDelegate
 
@@ -31,7 +32,29 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  // FACEBOOK STUFF START
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                           didFinishLaunchingWithOptions:launchOptions];
+  // FACEBOOK STUFF END
   return YES;
 }
 
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  
+  BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                openURL:url
+                                                      sourceApplication:sourceApplication
+                                                             annotation:annotation
+                  ];
+  // Add any custom logic here.
+  return handled;
+}
+
 @end
+
+
+//  AppDelegate.m
