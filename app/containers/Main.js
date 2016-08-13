@@ -23,7 +23,15 @@ import { calculateDistance } from '../lib/calculateDistance';
 import html from '../webview/html';
 //this script will be injected into WebViewBridge to communicate
 import { injectScript } from '../webview/webviewBridgeScript';
+
 var resetCamera;
+var addCubeToLocation;
+var controlThreeJSCamera;
+var setHeadingToZero;
+var setHeading;
+var setCurrentHeading;
+var testHeading = 0;
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -39,12 +47,13 @@ class Main extends Component {
       initialPosition: null,
       currentPosition: null,
       currentHeading: null,
-      deltaX: null,
-      deltaZ: null,
       sliderValue: 1,
       sampleSwitch: false,
       username: '',
-      drawerItem: 'Search'
+      drawerItem: 'Search',
+      deltaX: 0,
+      deltaZ: 0,
+      totalAPICalls: 0
     };
   }
 
@@ -103,7 +112,7 @@ class Main extends Component {
 
   watchOrientation(callback) {
     Location.startUpdatingHeading();
-    this.getInitialHeading = DeviceEventEmitter.addListener(
+    this.getCurrentHeading = DeviceEventEmitter.addListener(
       'headingUpdated',
       (data) => {
         // console.log('got heading', data);
@@ -112,12 +121,13 @@ class Main extends Component {
           currentHeading: data.heading
         });
 
-        callback(data.heading);
+        // callback(data.heading);
+        setTimeout(() => { callback(data.heading); }, 5000);
       }
     );
   }
   //initGeolocation gets the initial geolocation and set it to initialPosition state
-  initGeolocation(cameraCallback, placesCallback) {
+  initGeolocation(initialCameraAngleCallback) {
     Location.startUpdatingLocation();
     //this will listen to geolocation changes and update it in state
     this.getInitialLocation = DeviceEventEmitter.addListener(
@@ -135,7 +145,7 @@ class Main extends Component {
     //wait 7 seconds to get a more accurate location reading, remove getInitialLocation listner after that
     setTimeout(() => {
       this.getInitialLocation.remove();
-      this.watchGeolocation(cameraCallback, placesCallback);
+      initialCameraAngleCallback();
     }, 5000);
   }
 
@@ -159,7 +169,8 @@ class Main extends Component {
         if (!this.state.lastAPICallPosition) {
           this.setState({
             lastAPICallPositionString: JSON.stringify(location),
-            lastAPICallPosition: location.coords
+            lastAPICallPosition: location.coords,
+            totalAPICalls: this.state.totalAPICalls += 1
           });
           console.log('initial fetch places');
           placesCallback();
@@ -173,7 +184,8 @@ class Main extends Component {
             //update the lastAPICallPosition to current position
             this.setState({
               lastAPICallPositionString: JSON.stringify(location),
-              lastAPICallPosition: location.coords
+              lastAPICallPosition: location.coords,
+              totalAPICalls: this.state.totalAPICalls += 1
             });
             console.log('range reached');
             placesCallback();
@@ -192,12 +204,62 @@ class Main extends Component {
   onBridgeMessage(message) {
     const { webviewbridge } = this.refs;
 
+    //////////////////////////
+    //react buttons handlers
+    //////////////////////////
+    addCubeToLocation = (location) => {
+      // let cubeLocation = calculateDistance(this.state.currentPosition, location);
+      let cubeLocation = { deltaX: 5, deltaZ: 0 };
+      cubeLocation.type = 'addTestCube';
+      webviewbridge.sendToBridge(JSON.stringify(cubeLocation));
+    };
+
     //for dev purpose only, resets threejs camera back to 0,0
     resetCamera = () => {
       webviewbridge.sendToBridge(JSON.stringify({type: 'cameraPosition', deltaX: 0, deltaZ: 0}));
     };
 
-    let updateThreeJSCamera = (newCameraPosition) => {
+    setHeadingToZero = () => {
+      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: 0}));
+    };
+
+    setCurrentHeading = () => {
+      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: this.state.currentHeading}));
+    };
+
+    setHeading = (heading) => {
+      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
+    };
+
+    //this is fired when direction buttons are click
+    controlThreeJSCamera = (x, z) => {
+      webviewbridge.sendToBridge(JSON.stringify({type: 'cameraPosition', deltaX: this.state.deltaX + x, deltaZ: this.state.deltaZ + z}));
+      this.setState({
+        deltaX: this.state.deltaX + x,
+        deltaZ: this.state.deltaZ + z
+      });
+    };
+
+    //////////////////////////
+    //webviewBridge handlers
+    //////////////////////////
+    let setInitialCameraAngle = () => {
+      this.initOrientation(
+        (initialHeading) => {
+          console.log('initialHeading', initialHeading);
+          webviewbridge.sendToBridge(JSON.stringify({type: 'initialHeading', heading: initialHeading}));
+          this.getInitialHeading.remove();
+        }
+      );
+    };
+
+    let calibrateCameraAngle = (heading) => {
+      // console.log('calibrate ThreeJSCamera');
+      this.getCurrentHeading.remove();
+      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
+    };
+
+    let updateThreeJSCameraPosition = (newCameraPosition) => {
       webviewbridge.sendToBridge(JSON.stringify(newCameraPosition));
     };
 
@@ -218,28 +280,17 @@ class Main extends Component {
       });
     };
 
-    let updateCameraAngle = (heading) => {
-      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
-    };
-
     //webview will send 'webview is loaded' back when the injectedScript is loaded
     if (message === 'webview is loaded') {
       this.startDeviceLocationUpdate();
-
-      //once bridge injectedScript is loaded, send over heading to orient threejs camera
-      this.initOrientation.call(this,
-        (initialHeading) => {
-          console.log('initialHeading', initialHeading);
-          webviewbridge.sendToBridge(JSON.stringify({type: 'initialHeading', heading: initialHeading}));
-          this.getInitialHeading.remove();
-        }
-      );
-
+      //once bridge injectedScript is loaded, set 0,0, and send over heading to orient threejs camera
+      this.initGeolocation(setInitialCameraAngle);
     } else if (message === 'heading received') {
-      //once threejs camera is oriented, send the camera position to webview,
       //if distance exceed a certain treashold, updatePlaces will be called to fetch new locations
-      this.initGeolocation(updateThreeJSCamera, updatePlaces);
-      this.watchOrientation(updateCameraAngle);
+      this.watchGeolocation(updateThreeJSCameraPosition, updatePlaces);
+      // this.watchOrientation(calibrateCameraAngle);
+      //calibrate threejs camera according to north every 5 seconds
+      setInterval(() => { this.watchOrientation(calibrateCameraAngle); }, 6000);
     } else {
       console.log(message);
     }
@@ -483,28 +534,85 @@ class Main extends Component {
         panOpenMask={0.5}
         panCloseMask={0.5}
         tweenHandler={(ratio) => ({main: { opacity:(3-ratio)/3 }})}>
-      <View style={{flex: 1}}>
-        <Camera
-          ref={(cam) => {
-          this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
-          <WebViewBridge
-            ref="webviewbridge"
-            onBridgeMessage={this.onBridgeMessage.bind(this)}
-            injectedJavaScript={injectScript}
-            source={{html}}
-            style={{backgroundColor: 'transparent'}}>
-            <TouchableHighlight style={styles.menu} onPress={() => {this._drawer.open()}}>
-              <View style={styles.button}>
-                <Image style={styles.search} source={require('../assets/search.png')}/>
-              </View>
+        <View style={{flex: 1}}>
+          <Camera
+            ref={(cam) => {
+            this.camera = cam;
+            }}
+            style={styles.preview}
+            aspect={Camera.constants.Aspect.fill}>
+            <WebViewBridge
+              ref="webviewbridge"
+              onBridgeMessage={this.onBridgeMessage.bind(this)}
+              injectedJavaScript={injectScript}
+              source={{html}}
+              style={{backgroundColor: 'transparent'}}>
+              <TouchableHighlight style={styles.menu} onPress={() => {this._drawer.open()}}>
+                <View style={styles.button}>
+                  <Image style={styles.search} source={require('../assets/search.png')}/>
+                </View>
+              </TouchableHighlight>
+            </WebViewBridge>
+          </Camera>
+          <View>
+            <TouchableHighlight onPress={resetCamera}>
+              <Text>reset to 0, 0</Text>
             </TouchableHighlight>
-          </WebViewBridge>
-        </Camera>
-
-      </View>
+            <Text>
+              <Text style={styles.title}>Current position: </Text>
+              {this.state.currentPositionString}
+            </Text>
+            <TouchableHighlight onPress={() => { addCubeToLocation({latitude: this.state.currentPosition.latitude, longitude: this.state.currentPosition.longitude})} }>
+              <Text>add cube here</Text>
+            </TouchableHighlight>
+            <Text>
+              <Text style={styles.title}>Current heading: </Text>
+              {this.state.currentHeading}
+              <Text style={styles.title}>test heading: </Text>
+              {testHeading}
+            </Text>
+            <Text>
+              <Text style={styles.title}>DeltaX from 0,0: </Text>
+              {this.state.deltaX}
+            </Text>
+            <Text>
+              <Text style={styles.title}>DeltaZ from 0,0: </Text>
+              {this.state.deltaZ}
+            </Text>
+            <Text>
+              <Text style={styles.title}>Distance from last API call: </Text>
+              {this.state.distanceFromLastAPICallString}
+            </Text>
+            <Text>
+              <Text style={styles.title}>Total API calls: </Text>
+              {this.state.totalAPICalls}
+            </Text>
+          </View>
+          <TouchableHighlight onPress={() => {controlThreeJSCamera(.2, 0)} }>
+            <Text>go front</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {controlThreeJSCamera(-.2, 0)} }>
+            <Text>go back</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {controlThreeJSCamera(0, .2)} }>
+            <Text>go left</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {controlThreeJSCamera(0, -.2)} }>
+            <Text>go right</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {setHeadingToZero()}}>
+            <Text>set heading to 0</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {setCurrentHeading()}}>
+            <Text>set heading to currentHeading</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {testHeading += 1; setHeading(testHeading)}}>
+            <Text>add heading</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {testHeading -= 1; setHeading(testHeading)}}>
+            <Text>reduce heading</Text>
+          </TouchableHighlight>
+        </View>
       </Drawer>
     );
   }

@@ -2,8 +2,6 @@ const RenderScene =
 `
   <script>
     var camera, controls, animate, heading, scene;
-    var displacementX = 0;
-    var displacementZ = 0;
     (function() {
       "use strict";
 
@@ -67,7 +65,7 @@ const RenderScene =
             var geo = new THREE.BoxGeometry(1, 1, 1);
             var mat = new THREE.MeshBasicMaterial({color: 0x00FF00, wireframe: true});
             var cube = new THREE.Mesh(geo, mat);
-            cube.position.set(lat, 0, -1 * long);
+            cube.position.set(-1 * long, 0, -1 * lat);
             cube.visible = false;
             scene.add(cube);
             divs.push({div: element, cube: cube});
