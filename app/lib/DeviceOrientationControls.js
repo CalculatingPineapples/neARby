@@ -85,7 +85,12 @@ const DeviceOrientationControls = `
 
 				if ( scope.enabled === false ) return;
 
-				var alpha = scope.deviceOrientation.alpha ? THREE.Math.degToRad( scope.deviceOrientation.alpha ) + this.alphaOffsetAngle : 0; // Z
+				if (headingUpdate) {
+					heading = 360 - ((this.alphaOffsetAngle - THREE.Math.degToRad( scope.deviceOrientation.alpha )) / (Math.PI / 180));
+					headingUpdate = false;
+				}
+
+				var alpha = scope.deviceOrientation.alpha ? THREE.Math.degToRad( scope.deviceOrientation.alpha ) + (360 - heading) * Math.PI / 180  : 0; // Z
 				var beta = scope.deviceOrientation.beta ? THREE.Math.degToRad( scope.deviceOrientation.beta ) : 0; // X'
 				var gamma = scope.deviceOrientation.gamma ? THREE.Math.degToRad( scope.deviceOrientation.gamma ) : 0; // Y''
 				var orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
@@ -95,9 +100,9 @@ const DeviceOrientationControls = `
 
 			};
 
-			this.updateAlphaOffsetAngle = function( angle ) {
+			this.updateAlphaOffsetAngle = function( offsetAngle ) {
 
-				this.alphaOffsetAngle = angle;
+				this.alphaOffsetAngle = offsetAngle;
 				this.update();
 
 			};
