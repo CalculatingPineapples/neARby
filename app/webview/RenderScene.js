@@ -1,7 +1,7 @@
 const RenderScene =
 `
   <script>
-    var camera, controls, animate, heading, scene;
+    var camera, controls, animate, heading, scene, headingUpdate;
     (function() {
       "use strict";
 
@@ -65,7 +65,7 @@ const RenderScene =
             var geo = new THREE.BoxGeometry(1, 1, 1);
             var mat = new THREE.MeshBasicMaterial({color: 0x00FF00, wireframe: true});
             var cube = new THREE.Mesh(geo, mat);
-            cube.position.set(-1 * long, 0, -1 * lat);
+            cube.position.set(long, 0, -1 * lat);
             cube.visible = false;
             scene.add(cube);
             divs.push({div: element, cube: cube});
@@ -88,7 +88,7 @@ const RenderScene =
           window.requestAnimationFrame( animate );
 
           // controls.update();
-          controls.updateAlphaOffsetAngle( (360 - heading) * (Math.PI / 180));
+          controls.updateAlphaOffsetAngle( (360 - heading) * (Math.PI / 180), headingUpdate);
           renderer.render(scene, camera);
 
         };

@@ -86,7 +86,7 @@ const DeviceOrientationControls = `
 				if ( scope.enabled === false ) return;
 
 				if (headingUpdate) {
-					heading = 360 - ((this.alphaOffsetAngle - THREE.Math.degToRad( scope.deviceOrientation.alpha )) / (Math.PI / 180));
+					heading = 360 - ((this.alphaOffsetAngle - THREE.Math.degToRad( scope.deviceOrientation.alpha ) ) / (Math.PI / 180));
 					headingUpdate = false;
 				}
 
