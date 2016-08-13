@@ -255,8 +255,8 @@ class Main extends Component {
 
     let calibrateCameraAngle = (heading) => {
       // console.log('calibrate ThreeJSCamera');
-      this.getCurrentHeading.remove();
-      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
+      // this.getCurrentHeading.remove();
+      // webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
     };
 
     let updateThreeJSCameraPosition = (newCameraPosition) => {
