@@ -9,7 +9,7 @@ const html =
   <!DOCTYPE html>
   <html lang="en">
     <head>
-      <title>three.js webgl - controls - deviceorientation</title>
+      <title>neARby</title>
       <meta charset="utf-8">
       <meta name="viewport" content="user-scalable=no, initial-scale=1">
       <style>

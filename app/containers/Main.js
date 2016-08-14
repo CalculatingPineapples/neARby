@@ -23,6 +23,7 @@ import { calculateDistance } from '../lib/calculateDistance';
 import html from '../webview/html';
 //this script will be injected into WebViewBridge to communicate
 import { injectScript } from '../webview/webviewBridgeScript';
+import Compass from './Compass';
 
 //webviewbrige variables
 var resetCamera;
@@ -32,6 +33,7 @@ var setHeadingToZero;
 var setHeading;
 var setCurrentHeading;
 var testHeading = 0;
+var sendNewHeading = false;
 
 class Main extends Component {
   constructor(props) {
@@ -197,8 +199,8 @@ class Main extends Component {
     //react buttons handlers
     //////////////////////////
     addCubeToLocation = (location) => {
-      // let cubeLocation = calculateDistance(this.state.currentPosition, location);
-      let cubeLocation = { deltaX: 5, deltaZ: 0 };
+      let cubeLocation = calculateDistance(this.state.initialPosition, location);
+      // let cubeLocation = { deltaX: 5, deltaZ: 0 };
       cubeLocation.type = 'addTestCube';
       webviewbridge.sendToBridge(JSON.stringify(cubeLocation));
     };
@@ -246,9 +248,12 @@ class Main extends Component {
     };
 
     let calibrateCameraAngle = (heading) => {
-      // console.log('calibrate ThreeJSCamera');
-      this.getHeading.remove();
-      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
+      console.log('calibrate ThreeJSCamera');
+      // this.getHeading.remove();
+      if (sendNewHeading) {
+        webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
+        sendNewHeading = false;
+      }
     };
 
     let updateThreeJSCameraPosition = (newCameraPosition) => {
@@ -282,8 +287,8 @@ class Main extends Component {
       this.watchGeolocation(updateThreeJSCameraPosition, updatePlaces);
       // this.watchOrientation(calibrateCameraAngle);
       //calibrate threejs camera according to north every 5 seconds
+      // setInterval(() => { sendNewHeading = true; }, 5000);
       this.sendOrientation(calibrateCameraAngle);
-      setInterval(() => { this.sendOrientation(calibrateCameraAngle); }, 5000);
     } else {
       console.log(message);
     }
@@ -333,6 +338,69 @@ class Main extends Component {
     } else {
       return 'between today and ' + weekdays[dayOfWeek + this.state.sliderValue - 1];
     }
+  }
+
+  renderDebug() {
+    return (
+      <View>
+        <TouchableHighlight onPress={resetCamera}>
+          <Text>reset to 0, 0</Text>
+        </TouchableHighlight>
+        <Text>
+          <Text style={styles.title}>Current position: </Text>
+          {this.state.currentPositionString}
+        </Text>
+        <TouchableHighlight onPress={() => { addCubeToLocation({latitude: this.state.currentPosition.latitude, longitude: this.state.currentPosition.longitude})} }>
+          <Text>add cube here</Text>
+        </TouchableHighlight>
+        <Text>
+          <Text style={styles.title}>Current heading: </Text>
+          {this.state.currentHeading}
+          <Text style={styles.title}>test heading: </Text>
+          {testHeading}
+        </Text>
+        <Text>
+          <Text style={styles.title}>DeltaX from 0,0: </Text>
+          {this.state.deltaX}
+        </Text>
+        <Text>
+          <Text style={styles.title}>DeltaZ from 0,0: </Text>
+          {this.state.deltaZ}
+        </Text>
+        <Text>
+          <Text style={styles.title}>Distance from last API call: </Text>
+          {this.state.distanceFromLastAPICallString}
+        </Text>
+        <Text>
+          <Text style={styles.title}>Total API calls: </Text>
+          {this.state.totalAPICalls}
+        </Text>
+        <TouchableHighlight onPress={() => {controlThreeJSCamera(.2, 0)} }>
+          <Text>go front</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {controlThreeJSCamera(-.2, 0)} }>
+          <Text>go back</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {controlThreeJSCamera(0, .2)} }>
+          <Text>go left</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {controlThreeJSCamera(0, -.2)} }>
+          <Text>go right</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {setHeadingToZero()}}>
+          <Text>set heading to 0</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {setCurrentHeading()}}>
+          <Text>set heading to currentHeading</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {testHeading += 1; setHeading(testHeading)}}>
+          <Text>add heading</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {testHeading -= 1; setHeading(testHeading)}}>
+          <Text>reduce heading</Text>
+        </TouchableHighlight>
+      </View>
+    );
   }
 
   render() {
@@ -540,6 +608,7 @@ class Main extends Component {
               injectedJavaScript={injectScript}
               source={{html}}
               style={{backgroundColor: 'transparent'}}>
+              <Compass rotation={this.state.currentHeading}/>
               <TouchableHighlight style={styles.menu} onPress={() => {this._drawer.open()}}>
                 <View style={styles.button}>
                   <Image style={styles.search} source={require('../assets/search.png')}/>
@@ -547,65 +616,8 @@ class Main extends Component {
               </TouchableHighlight>
             </WebViewBridge>
           </Camera>
-          <View>
-            <TouchableHighlight onPress={resetCamera}>
-              <Text>reset to 0, 0</Text>
-            </TouchableHighlight>
-            <Text>
-              <Text style={styles.title}>Current position: </Text>
-              {this.state.currentPositionString}
-            </Text>
-            <TouchableHighlight onPress={() => { addCubeToLocation({latitude: this.state.currentPosition.latitude, longitude: this.state.currentPosition.longitude})} }>
-              <Text>add cube here</Text>
-            </TouchableHighlight>
-            <Text>
-              <Text style={styles.title}>Current heading: </Text>
-              {this.state.currentHeading}
-              <Text style={styles.title}>test heading: </Text>
-              {testHeading}
-            </Text>
-            <Text>
-              <Text style={styles.title}>DeltaX from 0,0: </Text>
-              {this.state.deltaX}
-            </Text>
-            <Text>
-              <Text style={styles.title}>DeltaZ from 0,0: </Text>
-              {this.state.deltaZ}
-            </Text>
-            <Text>
-              <Text style={styles.title}>Distance from last API call: </Text>
-              {this.state.distanceFromLastAPICallString}
-            </Text>
-            <Text>
-              <Text style={styles.title}>Total API calls: </Text>
-              {this.state.totalAPICalls}
-            </Text>
-          </View>
-          <TouchableHighlight onPress={() => {controlThreeJSCamera(.2, 0)} }>
-            <Text>go front</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {controlThreeJSCamera(-.2, 0)} }>
-            <Text>go back</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {controlThreeJSCamera(0, .2)} }>
-            <Text>go left</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {controlThreeJSCamera(0, -.2)} }>
-            <Text>go right</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {setHeadingToZero()}}>
-            <Text>set heading to 0</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {setCurrentHeading()}}>
-            <Text>set heading to currentHeading</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {testHeading += 1; setHeading(testHeading)}}>
-            <Text>add heading</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {testHeading -= 1; setHeading(testHeading)}}>
-            <Text>reduce heading</Text>
-          </TouchableHighlight>
         </View>
+        {this.renderDebug()}
       </Drawer>
     );
   }
