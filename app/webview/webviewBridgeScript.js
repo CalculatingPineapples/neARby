@@ -51,7 +51,7 @@ export const injectScript = `
 
       //animate function comes from html string
       window.animate();
-      addAxis();
+      // addAxis();
     }
 
     if (WebViewBridge) {
@@ -71,8 +71,9 @@ export const injectScript = `
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
+          window.alert('asdfasdf');
           var places = message.places;
-          WebViewBridge.send(JSON.stringify("in WebViewBridge, got places"));
+          WebViewBridge.send(JSON.stringify("in WebViewBridge, got places" + JSON.stringify(places)));
           window.divs.forEach(function(obj) {
             if (obj.cube) {
               scene.remove(obj.cube); 

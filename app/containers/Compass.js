@@ -41,7 +41,10 @@ class Compass extends Component {
       let theta = Math.atan2(offset.xOffset, offset.zOffset) * 180 / Math.PI;
       let hypontenus = Math.sqrt(offset.xOffset * offset.xOffset + offset.zOffset * offset.zOffset);
 
-      if (Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus < 45 && Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus < 45) {
+      if (Math.abs(Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus) < 45 && Math.abs(Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus) < 45) {
+        // console.log('sin', Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus);
+        // console.log('cos', Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus);
+        
         return (
           <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} key={idx} />
         );
@@ -58,7 +61,7 @@ class Compass extends Component {
         rotate="-135"
         origin="0, 0"
         x="185"
-        y="330"
+        y="95"
       >
         <G
           fill="rgba(0,255,255,1)"
@@ -67,6 +70,7 @@ class Compass extends Component {
           <Rect width="6" height="6" />
           <Circle r="3" fill="rgba(0,0,255,1)"/>
         </G>
+
       </G>
     );
   }
@@ -74,7 +78,7 @@ class Compass extends Component {
     return (
       <Svg
         width="600"
-        height="800">
+        height="200">
 
         {/*
           <Rect
@@ -87,7 +91,7 @@ class Compass extends Component {
 
         <G
           x="140"
-          y="285">
+          y="50">
 
           <G
             rotate={`${-1 * this.props.rotation}`}

@@ -287,9 +287,9 @@ class Main extends Component {
         let places = {type: 'places', places: results.payload};
         console.log('sending places to webview', places);
         webviewbridge.sendToBridge(JSON.stringify(places));
-        // this.setState({places: results.payload});
+        this.setState({places: results.payload});
 
-        // //testing
+        //testing
         // var currentSpot = {name: 'hr', latitude: 37.783643, longitude: -122.409053};
         // var spots = [
         //   {name: 'turk', latitude : 37.783339, longitude: -122.409257},
