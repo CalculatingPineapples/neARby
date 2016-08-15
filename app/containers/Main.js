@@ -284,7 +284,10 @@ class Main extends Component {
 
       this.props.action.fetchPlaces(positionObj)
       .then((results) => {
-        let places = {type: 'places', places: results.payload};
+        // var testPlace = {name: "Queen's Beauty House", lat: 575.9204482645928, lon: -292.71292376910134, distance: 2119, img: "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png"};
+        // let places = {type: 'places', places: [testPlace]};
+
+        let places = {type: 'places', places: results.payload.slice(0,15)};
         console.log('sending places to webview', places);
         webviewbridge.sendToBridge(JSON.stringify(places));
         this.setState({places: results.payload});

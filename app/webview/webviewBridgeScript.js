@@ -4,28 +4,28 @@ export const injectScript = `
     //add some directional axis for debugging
     var addAxis = function() {
       //red
-      var geo = new THREE.BoxGeometry(1000, .3, .3);
-      var mat = new THREE.MeshBasicMaterial({color: "rgb(255, 0, 0)", wireframe: true});
-      var axisX = new THREE.Mesh(geo, mat);
-      axisX.name = 'axisX';
-      axisX.position.set(0, -20, 0);
-      window.scene.add(axisX);
+      // var geo = new THREE.BoxGeometry(1000, .3, .3);
+      // var mat = new THREE.MeshBasicMaterial({color: "rgba(0,255,255,.1)", wireframe: true});
+      // var axisX = new THREE.Mesh(geo, mat);
+      // axisX.name = 'axisX';
+      // axisX.position.set(0, -20, 0);
+      // window.scene.add(axisX);
 
       //green
       var geo = new THREE.BoxGeometry(.3, 1000, .3);
-      var mat = new THREE.MeshBasicMaterial({color: "rgb(0, 255, 0)", wireframe: true});
+      var mat = new THREE.MeshBasicMaterial({color: "rgba(0,255,255,.1)", wireframe: true});
       var axisY = new THREE.Mesh(geo, mat);
       axisY.name = 'axisY';
       axisY.position.set(0, 0, 0);
       window.scene.add(axisY);
 
       //blue
-      var geo = new THREE.BoxGeometry(.3, .3, 1000);
-      var mat = new THREE.MeshBasicMaterial({color: "rgb(0, 0, 255)", wireframe: true});
-      var axisZ = new THREE.Mesh(geo, mat);
-      axisZ.name = 'axisZ';
-      axisZ.position.set(0, -20, 0);
-      window.scene.add(axisZ);
+      // var geo = new THREE.BoxGeometry(.3, .3, 1000);
+      // var mat = new THREE.MeshBasicMaterial({color: "rgba(0,255,255,.1)", wireframe: true});
+      // var axisZ = new THREE.Mesh(geo, mat);
+      // axisZ.name = 'axisZ';
+      // axisZ.position.set(0, -20, 0);
+      // window.scene.add(axisZ);
     };
 
     var orientCompass = function(message) {
@@ -51,7 +51,7 @@ export const injectScript = `
 
       //animate function comes from html string
       window.animate();
-      // addAxis();
+      addAxis();
     }
 
     if (WebViewBridge) {
@@ -74,11 +74,11 @@ export const injectScript = `
           window.alert('asdfasdf');
           var places = message.places;
           WebViewBridge.send(JSON.stringify("in WebViewBridge, got places" + JSON.stringify(places)));
-          window.divs.forEach(function(obj) {
-            if (obj.cube) {
-              scene.remove(obj.cube); 
-            }
-          });
+          // window.divs.forEach(function(obj) {
+          //   if (obj.cube) {
+          //     scene.remove(obj.cube); 
+          //   }
+          // });
           window.divs = [];
           places.forEach(function(place){
             window.createPlace(place.lat, place.lon, place.name, place.distance);
