@@ -73,7 +73,12 @@ export const injectScript = `
         } else if (message.type === 'places') {
           var places = message.places;
           WebViewBridge.send(JSON.stringify("in WebViewBridge, got places"));
-
+          window.divs.forEach(function(obj) {
+            if (obj.cube) {
+              scene.remove(obj.cube); 
+            }
+          });
+          window.divs = [];
           places.forEach(function(place){
             window.createPlace(place.lat, place.lon, place.name, place.distance);
           })

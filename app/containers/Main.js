@@ -287,7 +287,7 @@ class Main extends Component {
         let places = {type: 'places', places: results.payload};
         console.log('sending places to webview', places);
         webviewbridge.sendToBridge(JSON.stringify(places));
-        this.setState({places: results.payload});
+        // this.setState({places: results.payload});
 
         // //testing
         // var currentSpot = {name: 'hr', latitude: 37.783643, longitude: -122.409053};
@@ -326,6 +326,7 @@ class Main extends Component {
       //once bridge injectedScript is loaded, set 0,0, and send over heading to orient threejs camera
       this.initGeolocation(setInitialCameraAngle);
     } else if (message === 'heading received') {
+      // console.log('heading received');
       //at this point, the app is finish loading
       this.setState({initialize: false});
       //if distance exceed a certain treashold, updatePlaces will be called to fetch new locations
@@ -652,7 +653,7 @@ class Main extends Component {
               injectedJavaScript={injectScript}
               source={{html}}
               style={{backgroundColor: 'transparent'}}>
-              <Compass style={styles.compass} rotation={this.state.currentHeading} places={this.state.places} currentLocation={{deltaX: this.state.deltaX -this.state.deltaX, deltaZ: this.state.deltaZ -this.state.deltaZ}}/>
+              <Compass style={styles.compass} rotation={this.state.currentHeading} places={this.state.places} currentLocation={{deltaX: this.state.deltaX, deltaZ: this.state.deltaZ}}/>
               <TouchableHighlight style={styles.menu} onPress={() => {this._drawer.open()}}>
                 <View style={styles.button}>
                   <Image style={styles.search} source={require('../assets/search.png')}/>

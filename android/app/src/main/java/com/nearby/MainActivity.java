@@ -1,6 +1,7 @@
 package com.nearby;
 
 import com.facebook.react.ReactActivity;
+import com.horcrux.svg.RNSvgPackage;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 

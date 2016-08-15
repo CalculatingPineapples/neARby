@@ -11,10 +11,9 @@ import Svg,{
 } from 'react-native-svg';
 
 const calculateOffSet = (userLocation, placeLocation) => {
-
   let offset = {
-    xOffset: (userLocation.deltaX - placeLocation.lat) * 0.4,
-    zOffset: (placeLocation.lon - userLocation.deltaZ) * 0.4
+    xOffset: (userLocation.deltaX - placeLocation.lat) * 0.3,
+    zOffset: (placeLocation.lon - userLocation.deltaZ) * 0.3
   };
   return offset;
 };
@@ -31,17 +30,25 @@ class Compass extends Component {
   }
 
   componentWillReceiveProps() {
-    console.log('this.props.places',this.props.places);
-    console.log('this.props.currentLocation',this.props.currentLocation);
+    // console.log('this.props.places',this.props.places);
+    // console.log('this.props.currentLocation',this.props.currentLocation);
     this.renderPlacesOnCompass();
   }
 
   renderPlacesOnCompass(originX, originZ) {
     return this.props.places.map((place, idx) => {
       let offset = calculateOffSet(this.props.currentLocation, place);
-      return (
-        <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} key={idx} />
-      );
+      let theta = Math.atan2(offset.xOffset, offset.zOffset) * 180 / Math.PI;
+      let hypontenus = Math.sqrt(offset.xOffset * offset.xOffset + offset.zOffset * offset.zOffset);
+
+      if (Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus < 45 && Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus < 45) {
+        return (
+          <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} key={idx} />
+        );
+      } else {
+        return;
+      }
+
     });
   }
 
