@@ -17,6 +17,7 @@ export const injectScript = `
       var axisY = new THREE.Mesh(geo, mat);
       axisY.name = 'axisY';
       axisY.position.set(0, 0, 0);
+      axisY.rotation.y = 45 * Math.PI / 180;
       window.scene.add(axisY);
 
       //blue
@@ -30,9 +31,9 @@ export const injectScript = `
 
     var orientCompass = function(message) {
       //set compass to current location too
-      window.scene.getObjectByName( "axisX" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
+      // window.scene.getObjectByName( "axisX" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
       window.scene.getObjectByName( "axisY" ).position.set(message.deltaZ, 0, -1 * message.deltaX);
-      window.scene.getObjectByName( "axisZ" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
+      // window.scene.getObjectByName( "axisZ" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
     }
 
     //add cube in arbitraury location
@@ -71,14 +72,15 @@ export const injectScript = `
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
-          window.alert('asdfasdf');
+          // window.alert('asdfasdf');
           var places = message.places;
           WebViewBridge.send(JSON.stringify("in WebViewBridge, got places" + JSON.stringify(places)));
-          // window.divs.forEach(function(obj) {
-          //   if (obj.cube) {
-          //     scene.remove(obj.cube); 
-          //   }
-          // });
+          window.divs.forEach(function(obj) {
+            if (obj.cube) {
+              obj.div.remove();
+              scene.remove(obj.cube); 
+            }
+          });
           window.divs = [];
           places.forEach(function(place){
             window.createPlace(place.lat, place.lon, place.name, place.distance);

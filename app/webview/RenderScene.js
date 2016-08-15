@@ -30,11 +30,11 @@ const RenderScene =
         window.createPlace = function(lat, long, name, distance) {
           var scaleDivSize = function(element, distance) {
             var normalized = distance - 30;
-            var scale = normalized / 2000;
-            if (scale > 1) {
-              scale = 1;
+            var scale = 1 / (normalized / 2000) * 0.3;
+            if (scale > 1.5) {
+              scale = 1.5;
             }
-            element.style.transform = 'scale(' + 1 / scale * .4+ ')';
+            element.style.transform = 'scale(' + scale + ')';
           }
           var element = document.createElement('div')
           element.className = 'place';

@@ -32,14 +32,13 @@ class Compass extends Component {
     // console.log('this.props.rotation', this.props.rotation);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(newProps) {
     // console.log('this.props.places',this.props.places);
     // console.log('this.props.currentLocation',this.props.currentLocation);
-    this.renderPlacesOnCompass();
   }
 
   renderPlacesOnCompass(originX, originZ) {
-    return this.props.places.map((place, idx) => {
+    return this.props.places.slice(0,10).map((place, idx) => {
       let offset = calculateOffSet(this.props.currentLocation, place);
       let theta = Math.atan2(offset.xOffset, offset.zOffset) * 180 / Math.PI;
       let hypontenus = Math.sqrt(offset.xOffset * offset.xOffset + offset.zOffset * offset.zOffset);
@@ -47,7 +46,6 @@ class Compass extends Component {
       if (Math.abs(Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus) < 45 && Math.abs(Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus) < 45) {
         // console.log('sin', Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus);
         // console.log('cos', Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus);
-        
         return (
           <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} key={idx} />
         );
