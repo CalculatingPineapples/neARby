@@ -904,11 +904,8 @@
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
 					"$(SRCROOT)/../node_modules/react-native-location",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-<<<<<<< 5393b9112e2999161c864901c9ecbd4d72d43978
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-=======
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
->>>>>>> Fixing bug where bridge will not accept places
 				);
 				INFOPLIST_FILE = neARby/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

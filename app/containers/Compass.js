@@ -19,6 +19,9 @@ const calculateOffSet = (userLocation, placeLocation) => {
 };
 
 const Dots = (props) => {
+  if (props.far) {
+    return (<Circle cx={`${props.zOffset}`} cy={`${props.xOffset}`} r="3" fill="rgba(0,0,255,.2)"/>);
+  }
   return (<Circle cx={`${props.zOffset}`} cy={`${props.xOffset}`} r="3" fill="rgba(0,0,255,1)"/>);
 };
 
@@ -49,7 +52,9 @@ class Compass extends Component {
           <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} key={idx} />
         );
       } else {
-        return;
+        return (
+          <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} far={true} key={idx} />
+        );
       }
 
     });
@@ -60,8 +65,8 @@ class Compass extends Component {
       <G id="arrow"
         rotate="-135"
         origin="0, 0"
-        x="185"
-        y="95"
+        x="115"
+        y="500"
       >
         <G
           fill="rgba(0,255,255,1)"
@@ -78,7 +83,7 @@ class Compass extends Component {
     return (
       <Svg
         width="600"
-        height="200">
+        height="800">
 
         {/*
           <Rect
@@ -90,8 +95,8 @@ class Compass extends Component {
           */}
 
         <G
-          x="140"
-          y="50">
+          x="70"
+          y="455">
 
           <G
             rotate={`${-1 * this.props.rotation}`}

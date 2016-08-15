@@ -653,12 +653,14 @@ class Main extends Component {
               injectedJavaScript={injectScript}
               source={{html}}
               style={{backgroundColor: 'transparent'}}>
-              <Compass style={styles.compass} rotation={this.state.currentHeading} places={this.state.places} currentLocation={{deltaX: this.state.deltaX, deltaZ: this.state.deltaZ}}/>
+            <View style={{flex: 1, flexDirection: 'row'}}>
               <TouchableHighlight style={styles.menu} onPress={() => {this._drawer.open()}}>
                 <View style={styles.button}>
                   <Image style={styles.search} source={require('../assets/search.png')}/>
                 </View>
               </TouchableHighlight>
+              <Compass style={styles.compass} rotation={this.state.currentHeading} places={this.state.places} currentLocation={{deltaX: this.state.deltaX, deltaZ: this.state.deltaZ}}/>
+            </View>
             </WebViewBridge>
           </Camera>
         </View>
@@ -774,8 +776,9 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   compass: {
-    marginTop: 20,
-    marginLeft: 100,
+    width: 150,
+    height: 150,
+    justifyContent: 'flex-end',
   }
 });
 
