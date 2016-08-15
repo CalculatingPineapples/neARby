@@ -30,9 +30,9 @@ export const injectScript = `
 
     var orientCompass = function(message) {
       //set compass to current location too
-      window.scene.getObjectByName( "axisX" ).position.set(-1 * message.deltaZ, -20, -1 * message.deltaX);
-      window.scene.getObjectByName( "axisY" ).position.set(-1 * message.deltaZ, 0, -1 * message.deltaX);
-      window.scene.getObjectByName( "axisZ" ).position.set(-1 * message.deltaZ, -20, -1 * message.deltaX);
+      window.scene.getObjectByName( "axisX" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
+      window.scene.getObjectByName( "axisY" ).position.set(message.deltaZ, 0, -1 * message.deltaX);
+      window.scene.getObjectByName( "axisZ" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
     }
 
     //add cube in arbitraury location
@@ -40,7 +40,7 @@ export const injectScript = `
       var geometry = new THREE.BoxGeometry( 1, 1, 1 );
       var material = new THREE.MeshBasicMaterial( { color: "rgb(255, 0, 0)", wireframe: true } );
       var cube = new THREE.Mesh( geometry, material );
-      cube.position.set(-1 * threejsLon, 0, -1 * threejsLat);
+      cube.position.set(threejsLon, 0, -1 * threejsLat);
       window.scene.add( cube );
     }
 
@@ -60,19 +60,19 @@ export const injectScript = `
 
         if (message.type === "cameraPosition") {
           //sets threejs camera position as gps location changes, deltaZ is change in long, deltaX is change in lat
-          window.camera.position.set(-1 * message.deltaZ, 0, -1 * message.deltaX);
+          window.camera.position.set(message.deltaZ, 0, -1 * message.deltaX);
           orientCompass(message);
-          WebViewBridge.send("in WebViewBridge, got cameraPosition");
+          WebViewBridge.send(JSON.stringify("in WebViewBridge, got cameraPosition"));
 
         } else if (message.type === "initialHeading") {
 
           heading = message.heading;
           beginAnimation();
-          WebViewBridge.send("heading received");
+          WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
           var places = message.places;
-          WebViewBridge.send("in WebViewBridge, got places");
+          WebViewBridge.send(JSON.stringify("in WebViewBridge, got places"));
 
           places.forEach(function(place){
             window.createPlace(place.lat, place.lon, place.name, place.distance);
@@ -81,15 +81,15 @@ export const injectScript = `
         } else if (message.type === 'currentHeading') {
           heading = message.heading;
           headingUpdate = true;
-          WebViewBridge.send("in WebViewBridge, got currentHeading")
+          // WebViewBridge.send(JSON.stringify("in WebViewBridge, got currentHeading"));
 
         } else if (message.type === 'addTestCube') {
           addCubeHere(message.deltaX, message.deltaZ);
-          WebViewBridge.send("in WebViewBridge, add cube here");
+          WebViewBridge.send(JSON.stringify("in WebViewBridge, add cube here"));
         }
       };
 
-      WebViewBridge.send("webview is loaded");
+      WebViewBridge.send(JSON.stringify("webview is loaded"));
     }
   }());
 `;

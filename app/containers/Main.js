@@ -35,6 +35,8 @@ var setCurrentHeading;
 var testHeading = 0;
 var sendNewHeading = false;
 
+//deltaX is change in latidue, north (+), south (-)
+//deltaZ is change im latidue, east(+), west (-)
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +59,9 @@ class Main extends Component {
       drawerItem: 'Search',
       deltaX: 0,
       deltaZ: 0,
-      totalAPICalls: 0
+      totalAPICalls: 0,
+      intializing: true,
+      places: []
     };
   }
 
@@ -141,6 +145,16 @@ class Main extends Component {
     //wait 7 seconds to get a more accurate location reading, remove getInitialLocation listner after that
     setTimeout(() => {
       this.getInitialLocation.remove();
+
+      //initial call to server
+      let positionObj = {
+        latitude: this.state.initialPosition.latitude,
+        longitude: this.state.initialPosition.longitude,
+        threejsLat: 0,
+        threejsLon: 0
+      };
+      this.props.action.fetchPlaces(positionObj);
+
       initialCameraAngleCallback();
     }, 2000);
   }
@@ -248,8 +262,7 @@ class Main extends Component {
     };
 
     let calibrateCameraAngle = (heading) => {
-      console.log('calibrate ThreeJSCamera');
-      // this.getHeading.remove();
+      // console.log('calibrate ThreeJSCamera');
       if (sendNewHeading) {
         webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
         sendNewHeading = false;
@@ -274,20 +287,51 @@ class Main extends Component {
         let places = {type: 'places', places: results.payload};
         console.log('sending places to webview', places);
         webviewbridge.sendToBridge(JSON.stringify(places));
+        this.setState({places: results.payload});
+
+        // //testing
+        // var currentSpot = {name: 'hr', latitude: 37.783643, longitude: -122.409053};
+        // var spots = [
+        //   {name: 'turk', latitude : 37.783339, longitude: -122.409257},
+        //   {name: 'aws', latitude: 37.783344, longitude: -122.408677},
+        //   {name: 'new delhi', latitude: 37.784198,longitude: -122.409004},
+        //   {name: 'Hotel Metropolis', latitude: 37.783465, longitude: -122.409495}
+        // ];
+
+        // // lat: -24.237262903280765
+        // // lon:-33.71766798119452
+
+        // var dummyPlaces = spots.map((spot) => {
+        //   let position = calculateDistance(currentSpot, spot);
+        //   position.name = spot.name;
+        //   position.lat = position.deltaX;
+        //   position.lon = position.deltaZ;
+        //   position.distance = position.distance * 3.28084;
+        //   return position;
+        //   }
+        // );
+
+        // console.log('dummyPlaces', dummyPlaces);
+        // var places = {type: 'places', places: dummyPlaces};
+        // webviewbridge.sendToBridge(JSON.stringify(places));
+        // this.setState({places: dummyPlaces});
+        // //testing
       });
     };
 
+    message = JSON.parse(message);
     //webview will send 'webview is loaded' back when the injectedScript is loaded
     if (message === 'webview is loaded') {
       this.startDeviceLocationUpdate();
       //once bridge injectedScript is loaded, set 0,0, and send over heading to orient threejs camera
       this.initGeolocation(setInitialCameraAngle);
     } else if (message === 'heading received') {
+      //at this point, the app is finish loading
+      this.setState({initialize: false});
       //if distance exceed a certain treashold, updatePlaces will be called to fetch new locations
       this.watchGeolocation(updateThreeJSCameraPosition, updatePlaces);
-      // this.watchOrientation(calibrateCameraAngle);
       //calibrate threejs camera according to north every 5 seconds
-      // setInterval(() => { sendNewHeading = true; }, 5000);
+      setInterval(() => { sendNewHeading = true; }, 5000);
       this.sendOrientation(calibrateCameraAngle);
     } else {
       console.log(message);
@@ -381,10 +425,10 @@ class Main extends Component {
         <TouchableHighlight onPress={() => {controlThreeJSCamera(-.2, 0)} }>
           <Text>go back</Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={() => {controlThreeJSCamera(0, .2)} }>
+        <TouchableHighlight onPress={() => {controlThreeJSCamera(0, -.2)} }>
           <Text>go left</Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={() => {controlThreeJSCamera(0, -.2)} }>
+        <TouchableHighlight onPress={() => {controlThreeJSCamera(0, .2)} }>
           <Text>go right</Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {setHeadingToZero()}}>
@@ -608,7 +652,7 @@ class Main extends Component {
               injectedJavaScript={injectScript}
               source={{html}}
               style={{backgroundColor: 'transparent'}}>
-              <Compass rotation={this.state.currentHeading}/>
+              <Compass style={styles.compass} rotation={this.state.currentHeading} places={this.state.places} currentLocation={{deltaX: this.state.deltaX -this.state.deltaX, deltaZ: this.state.deltaZ -this.state.deltaZ}}/>
               <TouchableHighlight style={styles.menu} onPress={() => {this._drawer.open()}}>
                 <View style={styles.button}>
                   <Image style={styles.search} source={require('../assets/search.png')}/>
@@ -617,7 +661,7 @@ class Main extends Component {
             </WebViewBridge>
           </Camera>
         </View>
-        {this.renderDebug()}
+        {/* this.renderDebug() */}
       </Drawer>
     );
   }
@@ -727,6 +771,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     marginTop: 15,
     marginBottom: 15
+  },
+  compass: {
+    marginTop: 20,
+    marginLeft: 100,
   }
 });
 
