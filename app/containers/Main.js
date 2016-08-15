@@ -789,7 +789,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = function(state) {
   console.log('map state to props is called, this is state: ', state);
   return {
-    // places: state.places,
+    places: state.places,
     // user: state.user
     drawer: state.drawer.option
   };
