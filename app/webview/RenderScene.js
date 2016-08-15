@@ -31,8 +31,8 @@ const RenderScene =
           var scaleDivSize = function(element, distance) {
             var normalized = distance - 30;
             var scale = 1 / (normalized / 2000) * 0.3;
-            if (scale > 1.5) {
-              scale = 1.5;
+            if (scale > 1.4) {
+              scale = 1.4;
             }
             element.style.transform = 'scale(' + scale + ')';
           }
@@ -72,7 +72,7 @@ const RenderScene =
             if (e.div === div) {
               return false;
             }
-            var rect2 = e.div.querySelector('h1').getBoundingClientRect();
+            var rect2 = e.div.getBoundingClientRect();
             return checkOverlap(rect1, rect2);
           });
         }
@@ -87,7 +87,7 @@ const RenderScene =
             div.style.left = left + 'px';
             var top = (position.y - div.offsetHeight/2);
             div.style.top = top + 'px';
-            for (var inc = 30; checkCollision(div); inc += 30) {
+            for (var inc = 80; checkCollision(div); inc += 80) {
               div.style.top = top + inc + 'px';
             }
           });

@@ -35,6 +35,7 @@ class Compass extends Component {
   componentWillReceiveProps(newProps) {
     // console.log('this.props.places',this.props.places);
     // console.log('this.props.currentLocation',this.props.currentLocation);
+    this.props.places = newProps.places;
   }
 
   renderPlacesOnCompass(originX, originZ) {
@@ -43,7 +44,7 @@ class Compass extends Component {
       let theta = Math.atan2(offset.xOffset, offset.zOffset) * 180 / Math.PI;
       let hypontenus = Math.sqrt(offset.xOffset * offset.xOffset + offset.zOffset * offset.zOffset);
 
-      if (Math.abs(Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus) < 45 && Math.abs(Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus) < 45) {
+      if (Math.abs(Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus) < 42 && Math.abs(Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus) < 42) {
         // console.log('sin', Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus);
         // console.log('cos', Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus);
         return (

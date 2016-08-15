@@ -12,13 +12,13 @@ export const injectScript = `
       // window.scene.add(axisX);
 
       //green
-      var geo = new THREE.BoxGeometry(.3, 1000, .3);
-      var mat = new THREE.MeshBasicMaterial({color: "rgba(0,255,255,.1)", wireframe: true});
-      var axisY = new THREE.Mesh(geo, mat);
-      axisY.name = 'axisY';
-      axisY.position.set(0, 0, 0);
-      axisY.rotation.y = 45 * Math.PI / 180;
-      window.scene.add(axisY);
+      // var geo = new THREE.BoxGeometry(.3, 1000, .3);
+      // var mat = new THREE.MeshBasicMaterial({color: "rgba(0,255,255,.1)", wireframe: true});
+      // var axisY = new THREE.Mesh(geo, mat);
+      // axisY.name = 'axisY';
+      // axisY.position.set(0, 0, 0);
+      // axisY.rotation.y = 45 * Math.PI / 180;
+      // window.scene.add(axisY);
 
       //blue
       // var geo = new THREE.BoxGeometry(.3, .3, 1000);
