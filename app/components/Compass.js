@@ -18,28 +18,13 @@ const calculateOffSet = (userLocation, placeLocation) => {
   return offset;
 };
 
-const Dots = (props) => {
-  if (props.far) {
-    return (<Circle cx={`${props.zOffset}`} cy={`${props.xOffset}`} r="3" fill="rgba(0,0,255,.2)"/>);
-  }
-  return (<Circle cx={`${props.zOffset}`} cy={`${props.xOffset}`} r="3" fill="rgba(0,0,255,1)"/>);
-};
-
-
 class Compass extends Component {
   constructor(props) {
     super(props);
-    // console.log('this.props.rotation', this.props.rotation);
-  }
-
-  componentWillReceiveProps(newProps) {
-    // console.log('this.props.places',this.props.places);
-    // console.log('this.props.currentLocation',this.props.currentLocation);
-    this.props.places = newProps.places;
   }
 
   renderPlacesOnCompass(originX, originZ) {
-    return this.props.places.slice(0,10).map((place, idx) => {
+    return this.props.places.map((place, idx) => {
       let offset = calculateOffSet(this.props.currentLocation, place);
       let theta = Math.atan2(offset.xOffset, offset.zOffset) * 180 / Math.PI;
       let hypontenus = Math.sqrt(offset.xOffset * offset.xOffset + offset.zOffset * offset.zOffset);
@@ -48,11 +33,15 @@ class Compass extends Component {
         // console.log('sin', Math.sin(90 - theta + 45 * Math.PI / 180) * hypontenus);
         // console.log('cos', Math.cos(90 - theta + 45 * Math.PI / 180) * hypontenus);
         return (
-          <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} key={idx} />
+          <G x={`${originZ + offset.zOffset}`} y={`${originX + offset.xOffset}`} originX="1.5" originY="1.5" key={idx} >
+            <Circle cx="0" cy="0" r="3" fill="rgba(0,0,255,1)"/>
+          </G>
         );
       } else {
         return (
-          <Dots xOffset={originX + offset.xOffset} zOffset={originZ + offset.zOffset} far={true} key={idx} />
+          <G x={`${originZ + offset.zOffset}`} y={`${originX + offset.xOffset}`} originX="1.5" originY="1.5" key={idx}>
+            <Circle cx="0" cy="0" r="3" fill="rgba(0,0,255,.2)"/>
+          </G>
         );
       }
 
@@ -109,7 +98,7 @@ class Compass extends Component {
                 width="90"
                 height="90"
                 fill="rgba(0,255,255,.2)"
-                strokeWidth="5"
+                strokeWidth="3"
                 stroke="rgba(0,255,255,.2)"/>
 
               <G
@@ -141,16 +130,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,1)'
   }
 });
-
-let Place = (props) => {
-  return (
-    <Circle
-      cx="45"
-      cy="45"
-      r="5"
-      fill="blue"
-    />
-  )
-};
 
 export default Compass;

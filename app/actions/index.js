@@ -1,6 +1,16 @@
 export const PLACES_COLLECTION = 'PLACES_COLLECTION';
 export const DRAWER_TYPE = 'DRAWER_TYPE';
 // export const SET_USER = 'SET_USER';
+export const TEST_ACTION = 'TEST_ACTION';
+
+export const testAction = (testState) => {
+  return {
+    type: TEST_ACTION,
+    payload: {
+      testState: testState
+    }
+  };
+};
 
 export const fetchPlaces = (position) => {
   let collection = fetch('https://agile-peak-45133.herokuapp.com/location', {

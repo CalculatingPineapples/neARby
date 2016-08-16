@@ -74,7 +74,7 @@ export const injectScript = `
         } else if (message.type === 'places') {
           // window.alert('asdfasdf');
           var places = message.places;
-          WebViewBridge.send(JSON.stringify("in WebViewBridge, got places" + JSON.stringify(places)));
+          WebViewBridge.send(JSON.stringify("in WebViewBridge, got places"));
           window.divs.forEach(function(obj) {
             if (obj.cube) {
               obj.div.remove();
