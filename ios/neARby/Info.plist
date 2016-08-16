@@ -20,60 +20,64 @@
     <string>????</string>
     <key>CFBundleURLTypes</key>
     <array>
-    <dict>
-      <key>CFBundleURLSchemes</key>
+      <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSExceptionDomains</key>
+        <dict>
+          <key>localhost</key>
+          <dict>
+            <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+          </dict>
+        </dict>
+      </dict>
+      <string>NSLocationAlwaysUsageDescription</string>
+      <string>This is the plist item for NSLocationAlwaysUsageDescription</string>
+      <string>NSLocationWhenInUseUsageDescription</string>
+      <string>This is the plist item for NSLocationWhenInUseUsageDescription</string>
+      <string>UILaunchStoryboardName</string>
+      <string>LaunchScreen</string>
+      <string>UIRequiredDeviceCapabilities</string>
       <array>
-        <string>fb898499190294041</string>
+        <string>armv7</string>
       </array>
-    </dict>
-  </array>
-  <key>CFBundleVersion</key>
-  <string>1</string>
-  <key>FacebookAppID</key>
-  <string>898499190294041</string>
-  <key>FacebookDisplayName</key>
-  <string>neARby</string>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>fbapi</string>
-    <string>fb-messenger-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-  </array>
-  <key>LSRequiresIPhoneOS</key>
-  <true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow neARby to use location services</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-  
-  <key>CFBundleURLTypes</key>
-  <array>
+      <string>UISupportedInterfaceOrientations</string>
+      <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+      </array>
+      <string>UIViewControllerBasedStatusBarAppearance</string>
+      <false/>
+      <string>UIAppFonts</string>
+      <array>
+        <string>Entypo.ttf</string>
+        <string>EvilIcons.ttf</string>
+        <string>FontAwesome.ttf</string>
+        <string>Foundation.ttf</string>
+        <string>Ionicons.ttf</string>
+        <string>MaterialIcons.ttf</string>
+        <string>Octicons.ttf</string>
+        <string>Zocial.ttf</string>
+      </array>
+    </array>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>FacebookAppID</key>
+    <string>898499190294041</string>
+    <key>FacebookDisplayName</key>
+    <string>neARby</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
+    </array>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
       <true/>
@@ -86,10 +90,8 @@
         </dict>
       </dict>
     </dict>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>This is the plist item for NSLocationAlwaysUsageDescription</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>This is the plist item for NSLocationWhenInUseUsageDescription</string>
+    <string>Allow neARby to use location services</string>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
@@ -107,13 +109,29 @@
     <key>UIAppFonts</key>
     <array>
       <string>Entypo.ttf</string>
-      <string>EvilIcons.ttf</string>
       <string>FontAwesome.ttf</string>
-      <string>Foundation.ttf</string>
       <string>Ionicons.ttf</string>
-      <string>MaterialIcons.ttf</string>
       <string>Octicons.ttf</string>
-      <string>Zocial.ttf</string>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb898499190294041</string>
+        </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>898499190294041</string>
+    <key>FacebookDisplayName</key>
+    <string>neARby</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
     </array>
   </dict>
 </plist>

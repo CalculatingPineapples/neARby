@@ -11,7 +11,7 @@ export default function(state = initialState, action) {
     console.log('in drawer reducer');
     console.log(action.payload);
       return { ...state,
-      option: 'Places' };
+      option: action.payload };
     default:
       return state;
   }
