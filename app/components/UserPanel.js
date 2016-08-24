@@ -54,9 +54,6 @@ class UserPanel extends Component {
         annotations={[{latitude: 37.785834, longitude: -122.406417, title: 'DOLORES PAWTY', subtitle: 'dawgs only'}]}
         />
       <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
-      <View><Text>Friends: { this.props.user.friends.length > 0 ? this.props.user.friends.map(function(friend) {
-        return <Text>{friend.name}</Text>
-      }) : 'none' }</Text></View>
       <LoginButton
         publishPermissions={["publish_actions"]}
         onLogoutFinished={this.handleSignout.bind(this)}/>

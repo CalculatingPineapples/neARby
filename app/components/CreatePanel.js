@@ -16,11 +16,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index';
 import uploadImage from '../lib/S3Upload';
-import Promise from "bluebird"; 
+// import Promise from "bluebird";
 
 //TODOs:
-//add color selector for geometry and a color state, fix timestamp on ev  ent request obj
-//implement rating on detail view for user generated content, every time a rating is made, will send post request to server
+//add color selector for geometry and a color state, fix timestamp on event request obj
 //implement edit view, which let user remove the obj
 //show countdown on obj
 
@@ -36,7 +35,7 @@ class CreatePanel extends Component {
       startTime: '',
       duration: '',
       placePics: [],
-      eventPics: []
+      eventPics: [],
     };
   }
 
@@ -50,7 +49,7 @@ class CreatePanel extends Component {
       startTime: '',
       duration: '',
       placePics: [],
-      eventPics: []
+      eventPics: [],
     });
   }
 
@@ -72,7 +71,6 @@ class CreatePanel extends Component {
     };
 
     let uploadPromises = [];
-
     for (var i = 0; i < this.state.placePics.length; i++) {
       let source = this.state.placePics[i];
       uploadPromises.push(uploadImage(source.uri, 'places', source.fileSize));
@@ -108,7 +106,6 @@ class CreatePanel extends Component {
     };
 
     let uploadPromises = [];
-
     for (var i = 0; i < this.state.eventPics.length; i++) {
       let source = this.state.eventPics[i];
       uploadPromises.push(uploadImage(source.uri, 'events', source.fileSize));
@@ -123,7 +120,6 @@ class CreatePanel extends Component {
       this.resetState();
     });
     this.props.close();
-
   }
 
   startTimeSlider(value) {
@@ -161,18 +157,11 @@ class CreatePanel extends Component {
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      }
-      else if (response.error) {
+      } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        // You can display the image using either data...
-        // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+      } else if (response.chooseFromLibraryButtonTitle) {
 
-        // or a reference to the platform specific asset location
+      } else {
         const source = {uri: response.uri.replace('file://', ''), fileSize: response.fileSize, isStatic: true};
         console.log('source', JSON.stringify(source));
         if (this.state.createType === 'place') {
@@ -212,7 +201,6 @@ class CreatePanel extends Component {
           <TouchableHighlight onPress={this.pickImage.bind(this)}>
             <Text style={styles.inputLable2}>upload picture</Text>
           </TouchableHighlight>
-          
           <TouchableHighlight style={styles.createButton} onPress={() => { this.handleSubmitPlace(); }}>
             <Text style={styles.buttonText}>add spots</Text>
           </TouchableHighlight>
@@ -243,7 +231,6 @@ class CreatePanel extends Component {
       );
     }
   }
-
 
   render() {
     return (

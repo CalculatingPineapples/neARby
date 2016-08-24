@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
+  TouchableOpacity,
   Image,
   Text,
   DeviceEventEmitter //DeviceEventEmitter is imported for geolocation update
@@ -108,6 +109,7 @@ class ARcomponent extends Component {
       //     setTimeout(() => {this.props.action.fetchPlaces(positionObj)}, 5000);
       //   }
       // })
+
       .catch((err) => {
         //implement error message
         setTimeout(() => {this.props.action.fetchPlaces(positionObj)
@@ -323,11 +325,11 @@ class ARcomponent extends Component {
   renderButtons() {
     return (
       <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start'}}>
-        <TouchableHighlight style={styles.menu} onPress={this.props.pressSearch}>
+        <TouchableOpacity style={styles.menu} onPress={this.props.pressSearch}>
           <View style={styles.button}>
             <Image style={styles.search} source={require('../assets/search.png')}/>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <TouchableHighlight style={styles.menu} onPress={this.props.pressList}>
           <View style={styles.button}>
             <Image style={styles.search} source={require('../assets/link.png')}/>

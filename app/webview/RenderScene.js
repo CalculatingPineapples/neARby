@@ -184,19 +184,6 @@ const RenderScene =
         container.appendChild(renderer.domElement);
         renderer.domElement.addEventListener('touchstart', touchHandler, false)
 
-        // var torus = new THREE.TorusGeometry( 100, 30, 50, 100 );
-        // var torusMaterial = new THREE.MeshBasicMaterial( { color: "rgb(255, 0, 0)", wireframe: true } );
-        // openingTorus = new THREE.Mesh( torus, torusMaterial );
-        // openingTorus.position.set(0, 0, -1000);
-        // scene.add( openingTorus );
-
-        // var rotateTorus = function() {
-        //   if (openingTorus) {
-        //     // openingTorus.rotation.y += 0.1;
-        //     openingTorus.position.z += 10;
-        //   }
-        // }
-
         openingGroup = new THREE.Group();
 
         for ( var i = 0; i < 100; i ++ ) {

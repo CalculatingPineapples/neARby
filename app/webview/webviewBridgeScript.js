@@ -13,16 +13,8 @@ export const injectScript = `
     // // torus
     // var torus = new THREE.TorusGeometry( 3, 1, 16, 40 );
 
-    var orientCompass = function(message) {
-      //set compass to current location too
-      // window.scene.getObjectByName( "axisX" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
-      window.scene.getObjectByName( "axisY" ).position.set(message.deltaZ, 0, -1 * message.deltaX);
-      // window.scene.getObjectByName( "axisZ" ).position.set(message.deltaZ, -20, -1 * message.deltaX);
-    }
-
-    //add cube in arbitraury location
+    //add geometry in arbitraury location
     var addCubeHere = function(threejsLat, threejsLon, color, geometry) {
-      // var geometry = new THREE.BoxGeometry( 1, 1, 1 );
       var material = new THREE.MeshBasicMaterial( { color: color, wireframe: true } );
       var cube = new THREE.Mesh( geometry, material );
       cube.position.set(threejsLon, 0, -1 * threejsLat);
@@ -43,9 +35,10 @@ export const injectScript = `
         if (message.type === "cameraPosition") {
           //sets threejs camera position as gps location changes, deltaZ is change in long, deltaX is change in lat
           window.camera.position.set(message.deltaZ, 0, -1 * message.deltaX);
-          openingGroup.position.set(message.deltaZ, 0, -1 * message.deltaX);
-          orientCompass(message);
-          WebViewBridge.send(JSON.stringify("in WebViewBridge, got cameraPosition"));
+          
+          if (openingGroup) {
+            openingGroup.position.set(message.deltaZ, 0, -1 * message.deltaX);
+          }
 
         } else if (message.type === "initialHeading") {
 
@@ -84,7 +77,7 @@ export const injectScript = `
 
         } else if (message.type === 'currentHeading') {
           heading = message.heading;
-          headingUpdate = true;
+          // headingUpdate = true;
           // WebViewBridge.send(JSON.stringify("in WebViewBridge, got currentHeading"));
 
         } else if (message.type === 'images') {

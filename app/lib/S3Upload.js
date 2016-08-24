@@ -10,8 +10,8 @@ const options = {
   successActionStatus: 201
 };
 
+//this function returns a promise
 const uploadImage = (uri, type, fileSize) => {
-	// console.log('image.origURL', image.origURL);
 	let file = {
 	  uri: 'file://' + uri,
 	  name: '/' + type + '/' + fileSize + Math.floor(Math.random() * 10000) + '.jpg',
