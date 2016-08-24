@@ -20,7 +20,7 @@ class SmallDetailView extends Component {
       upvote: false,
       downvote: false,
       upvotes: this.props.place.upvotes || 0,
-      downvotes: this.props.place.downvotes || 0
+      downvotes: this.props.place.downvotes || 0,
     };
   }
 
@@ -48,16 +48,38 @@ class SmallDetailView extends Component {
     // this.submitVote('downvote');
   }
 
-  render() {
-    let buttons = (
-        <View style={styles.detailPreview_iconColumn}>
-          <View style={styles.detailPreview_Btn}>
-            <TouchableOpacity onPress={this.props.closePanel}>
-              <Image style={styles.detailPreview_closeBtn} source={require('../assets/close.png')}></Image>
-            </TouchableOpacity>
+  renderImg() {
+    if (Array.isArray(this.props.place.img)) {
+      return (
+        <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'}}>
+            {this.props.place.img.map(function(item, key) {
+              return ( <Image key={key} source={{uri: item}} style={styles.detailPreview_image}/>);
+              })
+            }
           </View>
-        </View>
+        </ScrollView>
       );
+    }
+    return (
+      <View style={{paddingLeft: 10}}>
+        <Image style={styles.detailPreview_image} source={{uri: 'http://kohlerglobalprojects.com/assets/Uploads/DetailThumb/Hotel-Indigo-Thumbnail.jpg'}}></Image>
+      </View>
+    );
+  }
+
+
+  render() {
+    let button;
+    // let buttons = (
+    //     <View style={styles.detailPreview_iconColumn}>
+    //       <View style={styles.detailPreview_Btn}>
+    //         <TouchableOpacity onPress={this.props.closePanel}>
+    //           <Image style={styles.detailPreview_closeBtn} source={require('../assets/close.png')}></Image>
+    //         </TouchableOpacity>
+    //       </View>
+    //     </View>
+    //   );
 
     let upvoteIcon = (
       <TouchableOpacity style={{paddingLeft: 5, paddingRight: 5}} onPress={() => {this.upvote()}}>
@@ -96,7 +118,7 @@ class SmallDetailView extends Component {
       );
     }
 
-    if (this.props.place.type && this.props.place.type === 'userPlace' || this.props.place.type === 'userEvent') {
+    // if (this.props.place.type && this.props.place.type === 'userPlace' || this.props.place.type === 'userEvent') {
       buttons = (
         <View style={styles.detailPreview_iconColumn}>
           <View style={styles.detailPreview_Btn}>
@@ -108,7 +130,7 @@ class SmallDetailView extends Component {
           <View style={{flex: 1, flexDirection: 'row'}}><Text>{this.state.downvotes}</Text>{downvoteIcon}</View>
         </View>
       );
-    }
+    // }
 
     return (
       <View style={styles.detailPreview}>
@@ -117,9 +139,7 @@ class SmallDetailView extends Component {
             <TouchableOpacity>
               <Text style={styles.detailPreview_heading}>{this.props.place.name}</Text>
             </TouchableOpacity>
-            <View style={{paddingLeft: 10}}>
-              <Image style={styles.detailPreview_image} source={{uri: 'http://kohlerglobalprojects.com/assets/Uploads/DetailThumb/Hotel-Indigo-Thumbnail.jpg'}}></Image>
-            </View>
+            {this.renderImg()}
           </View>
           {buttons}
         </View>

@@ -81,7 +81,6 @@ class CreatePanel extends Component {
       console.log('results', results);
       obj.img = results;
       this.props.action.addPlace(obj);
-      // sendSpotToServer('createPlace', obj);
       this.resetState();
     });
     this.props.close();
@@ -116,7 +115,6 @@ class CreatePanel extends Component {
       console.log('results', results);
       obj.img = results;
       this.props.action.addEvent(obj);
-      // sendSpotToServer('createPlace', obj);
       this.resetState();
     });
     this.props.close();
@@ -169,7 +167,7 @@ class CreatePanel extends Component {
             placePics: this.state.placePics.concat([source])
           });
         } else {
-          this.state({
+          this.setState({
             eventPics: this.state.eventPics.concat([source])
           });
         }
@@ -201,9 +199,11 @@ class CreatePanel extends Component {
           <TouchableHighlight onPress={this.pickImage.bind(this)}>
             <Text style={styles.inputLable2}>upload picture</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.createButton} onPress={() => { this.handleSubmitPlace(); }}>
-            <Text style={styles.buttonText}>add spots</Text>
-          </TouchableHighlight>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableHighlight style={styles.createButton} onPress={() => { this.handleSubmitPlace(); }}>
+              <Text style={styles.buttonText}>add spots</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       );
 
@@ -221,12 +221,24 @@ class CreatePanel extends Component {
             minimumValue={0}
             maximumValue={5}
             step={1} />
+          <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row'}}>
+              {this.state.eventPics.map(function(item, key) {
+                return (
+                  <Image key={key} source={{uri: item.uri}} style={styles.imageUpload} />
+                  );
+                })
+              }
+            </View>
+          </ScrollView>
           <TouchableHighlight onPress={this.pickImage.bind(this)}>
             <Text style={styles.inputLable2}>upload picture</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.createButton} onPress={() => { this.handleSubmitEvent(); }}>
-            <Text style={styles.buttonText}>add spots</Text>
-          </TouchableHighlight>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableHighlight style={styles.createButton} onPress={() => { this.handleSubmitEvent(); }}>
+              <Text style={styles.buttonText}>add spots</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       );
     }
@@ -234,7 +246,7 @@ class CreatePanel extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <Text style={styles.headingSmall}>make a spot</Text>
         <View style={styles.row}>
           <TouchableOpacity onPress={() => {this.switchType('place')} }>
@@ -251,7 +263,7 @@ class CreatePanel extends Component {
           </TouchableOpacity>
         </View>
         {this.renderForm()}
-      </View>
+      </ScrollView>
     );
   }
 };
