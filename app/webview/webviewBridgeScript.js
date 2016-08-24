@@ -33,6 +33,7 @@ export const injectScript = `
         var message = JSON.parse(message);
 
         if (message.type === "cameraPosition") {
+          // window.alert('cameraPosition');
           //sets threejs camera position as gps location changes, deltaZ is change in long, deltaX is change in lat
           window.camera.position.set(message.deltaZ, 0, -1 * message.deltaX);
           
@@ -41,6 +42,7 @@ export const injectScript = `
           }
 
         } else if (message.type === "initialHeading") {
+          // window.alert('initialHeading');
 
           if (!loading) {
             heading = message.heading;
@@ -48,6 +50,7 @@ export const injectScript = `
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
+          // window.alert('places');
           var places = message.places;
           // var places = [
           //   {name: 'nice place', lat: 3, lon: 4, distance: 100},

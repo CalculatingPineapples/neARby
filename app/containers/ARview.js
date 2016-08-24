@@ -74,8 +74,16 @@ class ARcomponent extends Component {
       (data) => {
 
         this.setState({currentHeading: data.heading});
-        
         callback(data.heading);
+
+        // let smoothingValue = 300;
+        // let previousHeading = this.state.currentHeading;
+        // let currentHeading = data.heading;
+
+        // let newHeading = previousHeading + (currentHeading - previousHeading) / smoothingValue;
+        // this.setState({currentHeading: currentHeading});
+       
+        // callback(newHeading);
       }
     );
   }
@@ -337,7 +345,7 @@ class ARcomponent extends Component {
         </TouchableHighlight>
         <TouchableHighlight style={styles.menu} onPress={this.props.pressCreate}>
           <View style={styles.button}>
-            <Image style={styles.objectButton} source={require('../assets/place.png')}/>
+            <Image style={styles.objectButton} source={require('../assets/plus.png')}/>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.menu} onPress={this.props.pressProfile}>
