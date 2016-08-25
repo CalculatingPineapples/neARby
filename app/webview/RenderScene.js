@@ -1,7 +1,8 @@
 const RenderScene =
 `
   <script>
-    var camera, controls, animate, heading, scene, headingUpdate, loader, openingGroup;
+    var camera, controls, animate, heading, scene, headingUpdate, openingGroup;
+    var angleDifference, newAngleDifference, calibrating, errorDifference;
     var loading = true;
     window.divs = [];
     (function() {
@@ -168,7 +169,7 @@ const RenderScene =
             fadeoutCubes();
           }
 
-          controls.updateAlphaOffsetAngle( (360 - heading) * (Math.PI / 180));
+          controls.updateAlphaOffsetAngle( (360 - angleDifference) * (Math.PI / 180));
           renderer.render(scene, camera);
         };
         container = document.getElementById( 'container' );

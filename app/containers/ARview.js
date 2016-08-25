@@ -75,15 +75,6 @@ class ARcomponent extends Component {
 
         this.setState({currentHeading: data.heading});
         callback(data.heading);
-
-        // let smoothingValue = 300;
-        // let previousHeading = this.state.currentHeading;
-        // let currentHeading = data.heading;
-
-        // let newHeading = previousHeading + (currentHeading - previousHeading) / smoothingValue;
-        // this.setState({currentHeading: currentHeading});
-       
-        // callback(newHeading);
       }
     );
   }
@@ -214,10 +205,7 @@ class ARcomponent extends Component {
 
     //this will sent current heading to threejs to correct
     this.calibrateCameraAngle = (heading) => {
-      if (sendNewHeading) {
-        webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
-        sendNewHeading = false;
-      }
+      webviewbridge.sendToBridge(JSON.stringify({type: 'currentHeading', heading: heading}));
     };
 
     this.updateThreeJSCameraPosition = (newCameraPosition) => {
@@ -236,7 +224,6 @@ class ARcomponent extends Component {
         longitude: longitude,
         threejsLat: threejsLat || 0,
         threejsLon: threejsLon || 0
-        //more filters
       };
 
       //if there are searches for events for places, keep fetching those searches
@@ -266,11 +253,15 @@ class ARcomponent extends Component {
       //if distance exceed a certain treashold, updatePlaces will be called to fetch new locations
       this.watchGeolocation(this.updateThreeJSCameraPosition, this.updatePlaces);
       //calibrate threejs camera according to north every 5 seconds
-      setInterval(() => { sendNewHeading = true; }, 5000);
       this.sendOrientation(this.calibrateCameraAngle);
     } else if (message.type === 'click') {
-      this.props.action.openPreview([message.key]);
-      console.log('threeJS click', message.key, this.props.places[message.key]);
+      console.log('this.props.places[message.key]', this.props.places[message.key]);
+      this.props.action.imageQuery(this.props.places[message.key])
+      .then((results) => {
+        console.log('results', results);
+        this.props.action.openPreview([message.key]);
+      });
+      // console.log('threeJS click', message.key, this.props.places[message.key]);
     } else {
       console.log(message);
     }

@@ -44,9 +44,7 @@ export const injectScript = `
         } else if (message.type === "initialHeading") {
           // window.alert('initialHeading');
 
-          if (!loading) {
-            heading = message.heading;
-          }
+          angleDifference = message.heading;
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
@@ -80,6 +78,7 @@ export const injectScript = `
 
         } else if (message.type === 'currentHeading') {
           heading = message.heading;
+          // window.alert('currentHeading');
           // headingUpdate = true;
           // WebViewBridge.send(JSON.stringify("in WebViewBridge, got currentHeading"));
 
@@ -92,6 +91,7 @@ export const injectScript = `
         }
       };
 
+      angleDifference = 0;
       heading = 0;
       beginAnimation();
       WebViewBridge.send(JSON.stringify("webview is loaded"));
@@ -99,3 +99,10 @@ export const injectScript = `
     }
   }());
 `;
+
+
+//native will always send heading information to webview
+//get difference between current heading and the threejs heading
+//if heading exceed certain value
+  //webview will calibrate the angle to the true heading by making a smooth camera pan
+

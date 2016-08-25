@@ -85,12 +85,50 @@ const DeviceOrientationControls = `
 
 				if ( scope.enabled === false ) return;
 
-				if (headingUpdate) {
-					heading = 360 - ((this.alphaOffsetAngle - THREE.Math.degToRad( scope.deviceOrientation.alpha ) ) / (Math.PI / 180));
-					headingUpdate = false;
+				if (scope.deviceOrientation.beta < 20 && scope.deviceOrientation.beta > -20) {
+					// window.alert('asdfasdfads');
+					if (!calibrating) {
+						// window.alert('not calibrating');
+						newAngleDifference = 360 - (((360 - heading) * (Math.PI / 180) - THREE.Math.degToRad( scope.deviceOrientation.alpha ) ) / (Math.PI / 180));
+						
+						if (Math.abs(newAngleDifference - angleDifference) < 180) {
+							// window.alert('angle difference');
+							errorDifference = newAngleDifference - angleDifference;
+						} else {
+							if (newAngleDifference - angleDifference > 0) {
+								errorDifference = Math.abs(newAngleDifference - angleDifference) - 360;
+							} else {
+								errorDifference = 360 - Math.abs(newAngleDifference - angleDifference);						
+							}
+						}
+
+						if (Math.abs(errorDifference) > 30) {
+							calibrating = true;
+						}
+					}
+
+					if (calibrating) {
+						// window.alert('calibrating');
+						angleDifference += (errorDifference / 100);
+						if (errorDifference < 0 && angleDifference <= newAngleDifference) {
+							calibrating = false;
+						} else if (errorDifference > 0 && angleDifference >= newAngleDifference) {
+							calibrating = false;
+						}
+					}
 				}
 
-				var alpha = scope.deviceOrientation.alpha ? THREE.Math.degToRad( scope.deviceOrientation.alpha ) + (360 - heading) * Math.PI / 180  : 0; // Z
+
+				// window.alert('errorDifference: ' + JSON.stringify(errorDifference));
+				// window.alert('newAngleDifference' + JSON.stringify(angleDifference));
+				// window.alert('newAngleDifference: ' + JSON.stringify(newAngleDifference - angleDifference));
+				// if (headingUpdate) {
+				// 	headingUpdate = false;
+				// }
+
+
+
+				var alpha = scope.deviceOrientation.alpha ? THREE.Math.degToRad( scope.deviceOrientation.alpha ) + THREE.Math.degToRad(360 - angleDifference)  : 0; // Z
 				var beta = scope.deviceOrientation.beta ? THREE.Math.degToRad( scope.deviceOrientation.beta ) : 0; // X'
 				var gamma = scope.deviceOrientation.gamma ? THREE.Math.degToRad( scope.deviceOrientation.gamma ) : 0; // Y''
 				var orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
