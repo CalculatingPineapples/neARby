@@ -50,6 +50,7 @@ class SmallDetailView extends Component {
   }
 
   enterARImageMode() {
+    console.log('enterARImageMode');
     this.props.action.switchARImageMode(true);
     this.props.closePanel();
   }

@@ -1,7 +1,7 @@
 const RenderScene =
 `
   <script>
-    var camera, controls, animate, heading, scene, headingUpdate, openingGroup;
+    var camera, controls, animate, heading, scene, openingGroup;
     var angleDifference, newAngleDifference, calibrating, errorDifference, errorDifferenceCounter;
     var loading = true;
     window.divs = [];
@@ -78,15 +78,35 @@ const RenderScene =
           };
         }
 
-        window.createPlace = function(lat, long, name, distance, key) {
-
+        window.createPlace = function(lat, long, name, distance, key, type) {
           var bitmap = document.createElement('canvas');
           var g = bitmap.getContext('2d');
           bitmap.width = 300;
           bitmap.height = 150;
           g.font = 'Bold 30px Helvetica, sans-serif';
 
-          g.fillStyle = '#007F7F';
+          // g.fillStyle = '#007F7F';
+          // var geo = new THREE.PlaneGeometry(1, 0.5);
+
+          if (type === 'place') {
+            g.fillStyle = '#007F7F';
+            var geo = new THREE.PlaneGeometry(1, 0.5);
+          } else if (type === 'event') {
+            g.fillStyle = '#ccff99';
+            var geo = new THREE.PlaneGeometry(1, 0.5);            
+          } else if (type === 'userPlace') {
+            // window.alert('userPlace');
+            g.fillStyle = '#ff0000';
+            var geo = new THREE.PlaneGeometry(1, 0.5); 
+            // var geo = new THREE.TorusGeometry( 1, .25, 10, 25 ); 
+          } else if (type === 'userEvent') {
+            // window.alert('userPlace');
+            g.fillStyle = '#ffff00';
+            var geo = new THREE.PlaneGeometry(1, 0.5);             
+            // var geo = new THREE.OctahedronGeometry( 1, 0 );
+          }
+
+          // g.fillStyle = '#007F7F';
           g.fillRect(0, 0, bitmap.width, bitmap.height);
           g.fillStyle = 'white';
           sizeFont(g, name, bitmap.width)
@@ -105,11 +125,11 @@ const RenderScene =
           g.strokeText(distance, 150, 125);
           g.strokeRect(0, 0, 300, 150);
 
+
           // canvas contents will be used for a texture
           var texture = new THREE.Texture(bitmap);
           texture.needsUpdate = true;
 
-          var geo = new THREE.PlaneGeometry(1, 0.5);
           var mat = new THREE.MeshBasicMaterial({transparent: true, opacity: 0.75, map: texture});
           var cube = new THREE.Mesh(geo, mat);
           cube.position.set(long, 0, -1 * lat);
@@ -222,7 +242,7 @@ const RenderScene =
             openingGroup = null;
           }
           for (var i = 0; i < openingGroup.children.length; i++) {
-            openingGroup.children[i].material.opacity -= .03
+            openingGroup.children[i].material.opacity -= .1
           }
         };
 
