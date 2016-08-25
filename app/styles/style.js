@@ -279,7 +279,9 @@ const styles = StyleSheet.create({
   images: {
     width: 100,
     height: 100,
-    padding: 8
+    padding: 8,
+    marginLeft: 2,
+    marginRight: 2
   },
   imageUpload: {
     width: 60,

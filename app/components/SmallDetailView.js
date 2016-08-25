@@ -3,7 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -49,23 +50,26 @@ class SmallDetailView extends Component {
   }
 
   renderImg() {
+
+    let images;
+
+    //if the place img attribute is an array it is a user place or event
     if (Array.isArray(this.props.place.img)) {
+      images = this.props.place.img;
+    } else {
+      images = this.props.photos;
+    }
+
       return (
         <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
-            {this.props.place.img.map(function(item, key) {
-              return ( <Image key={key} source={{uri: item}} style={styles.detailPreview_image}/>);
+            {images.slice(0,10).map(function(item, key) {
+              return ( <Image key={key} source={{uri: item}} style={styles.images}/>);
               })
             }
           </View>
         </ScrollView>
       );
-    }
-    return (
-      <View style={{paddingLeft: 10}}>
-        <Image style={styles.detailPreview_image} source={{uri: 'http://kohlerglobalprojects.com/assets/Uploads/DetailThumb/Hotel-Indigo-Thumbnail.jpg'}}></Image>
-      </View>
-    );
   }
 
 
@@ -151,7 +155,8 @@ class SmallDetailView extends Component {
 
 const mapStateToProps = function(state) {
   return {
-    user: state.user
+    user: state.user,
+    photos: state.photos.photos
   };
 };
 
