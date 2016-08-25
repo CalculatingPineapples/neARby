@@ -85,14 +85,12 @@ const DeviceOrientationControls = `
 
 				if ( scope.enabled === false ) return;
 
+				//only calibrate when device is held flat
 				if (scope.deviceOrientation.beta < 20 && scope.deviceOrientation.beta > -20) {
-					// window.alert('asdfasdfads');
 					if (!calibrating) {
-						// window.alert('not calibrating');
 						newAngleDifference = 360 - (((360 - heading) * (Math.PI / 180) - THREE.Math.degToRad( scope.deviceOrientation.alpha ) ) / (Math.PI / 180));
 						
 						if (Math.abs(newAngleDifference - angleDifference) < 180) {
-							// window.alert('angle difference');
 							errorDifference = newAngleDifference - angleDifference;
 						} else {
 							if (newAngleDifference - angleDifference > 0) {
@@ -104,15 +102,18 @@ const DeviceOrientationControls = `
 
 						if (Math.abs(errorDifference) > 30) {
 							calibrating = true;
+							errorDifferenceCounter = 0;
 						}
 					}
 
 					if (calibrating) {
 						// window.alert('calibrating');
+						errorDifferenceCounter += errorDifference / 100;
 						angleDifference += (errorDifference / 100);
-						if (errorDifference < 0 && angleDifference <= newAngleDifference) {
+
+						if (errorDifference < 0 && errorDifferenceCounter <= errorDifference) {
 							calibrating = false;
-						} else if (errorDifference > 0 && angleDifference >= newAngleDifference) {
+						} else if (errorDifference > 0 && errorDifferenceCounter >= errorDifference) {
 							calibrating = false;
 						}
 					}
