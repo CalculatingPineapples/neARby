@@ -52,6 +52,15 @@ class ARcomponent extends Component {
       this.sendPlacesToWebView(nextProps.places);
       this.props.action.resetPlaceUpdate();
     }
+
+    if (!nextProps.insideARImageMode && this.activateARImageMode && nextProps.ARImageMode) {
+      if (Array.isArray(nextProps.places[nextProps.focalPlace].img)) {
+        this.activateARImageMode(nextProps.places[nextProps.focalPlace].img);
+      } else {
+        this.activateARImageMode(nextProps.photos);
+      }
+      this.props.action.insideARImageMode(true);
+    }
   }
 
   componentWillUnmount() {
@@ -241,6 +250,11 @@ class ARcomponent extends Component {
       }
     };
 
+    this.activateARImageMode = (images) => {
+      let imageMsg = {type: 'images', images: images};
+      webviewbridge.sendToBridge(JSON.stringify(imageMsg));
+    };
+
     message = JSON.parse(message);
     //webview will send 'webview is loaded' back when the injectedScript is loaded
     if (message === 'webview is loaded') {
@@ -257,14 +271,14 @@ class ARcomponent extends Component {
     } else if (message.type === 'click') {
       
       if (this.props.places[message.key].type === 'userPlace' || this.props.places[message.key].type === 'userEvent') {
-                console.log('openPreviewopenPreview');
-        this.props.action.openPreview([message.key]);
+        // console.log('openPreviewopenPreview');
+        this.props.action.openPreview(message.key);
       } else {
-        console.log('imageQueryimageQuery');
+        // console.log('imageQueryimageQuery');
         this.props.action.imageQuery(this.props.places[message.key])
         .then((results) => {
-          console.log('results', results);
-          this.props.action.openPreview([message.key]);
+          // console.log('results', results);
+          this.props.action.openPreview(message.key);
         });
       }
 
@@ -391,6 +405,11 @@ const mapStateToProps = function(state) {
     searchMode: state.places.searchMode,
     placeQuery: state.places.placeQuery,
     eventQuery: state.places.eventQuery,
+
+    ARImageMode: state.detail.ARImageMode,
+    insideARImageMode: state.detail.insideARImageMode,
+    focalPlace: state.detail.focalPlace,
+    photos: state.photos.photos,
 
     initialPosition: state.Geolocation.initialPosition,
     currentPosition: state.Geolocation.currentPosition,

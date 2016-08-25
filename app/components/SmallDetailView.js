@@ -49,8 +49,23 @@ class SmallDetailView extends Component {
     // this.submitVote('downvote');
   }
 
-  renderImg() {
+  enterARImageMode() {
+    this.props.action.switchARImageMode(true);
+    this.props.closePanel();
+  }
 
+      //when click on an image
+        //close panel
+        //inject image to specific location
+        //switch on ARImageMode
+        //webview gets rid of the objects in scene
+        //webview renders the images
+
+      //once close button in ARImageMode is hit
+        //exit the ARImageMode, query the server and rerender the objs
+        //gets rid of the close button
+
+  renderImg() {
     let images;
 
     //if the place img attribute is an array it is a user place or event
@@ -64,8 +79,11 @@ class SmallDetailView extends Component {
         <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
             {images.slice(0,10).map(function(item, key) {
-              return ( <Image key={key} source={{uri: item}} style={styles.images}/>);
-              })
+              return (
+                <TouchableOpacity key={key} onPress={() => {this.enterARImageMode()}}>
+                    <Image source={{uri: item}} style={styles.images}/>
+                </TouchableOpacity>);
+              }.bind(this))
             }
           </View>
         </ScrollView>
@@ -74,16 +92,16 @@ class SmallDetailView extends Component {
 
 
   render() {
-    let button;
-    // let buttons = (
-    //     <View style={styles.detailPreview_iconColumn}>
-    //       <View style={styles.detailPreview_Btn}>
-    //         <TouchableOpacity onPress={this.props.closePanel}>
-    //           <Image style={styles.detailPreview_closeBtn} source={require('../assets/close.png')}></Image>
-    //         </TouchableOpacity>
-    //       </View>
-    //     </View>
-    //   );
+    // let button;
+    let buttons = (
+        <View style={styles.detailPreview_iconColumn}>
+          <View style={styles.detailPreview_Btn}>
+            <TouchableOpacity onPress={this.props.closePanel}>
+              <Image style={styles.detailPreview_closeBtn} source={require('../assets/close.png')}></Image>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
 
     let upvoteIcon = (
       <TouchableOpacity style={{paddingLeft: 5, paddingRight: 5}} onPress={() => {this.upvote()}}>
@@ -122,7 +140,7 @@ class SmallDetailView extends Component {
       );
     }
 
-    // if (this.props.place.type && this.props.place.type === 'userPlace' || this.props.place.type === 'userEvent') {
+    if (this.props.place.type && this.props.place.type === 'userPlace' || this.props.place.type === 'userEvent') {
       buttons = (
         <View style={styles.detailPreview_iconColumn}>
           <View style={styles.detailPreview_Btn}>
@@ -134,7 +152,7 @@ class SmallDetailView extends Component {
           <View style={{flex: 1, flexDirection: 'row'}}><Text>{this.state.downvotes}</Text>{downvoteIcon}</View>
         </View>
       );
-    // }
+    }
 
     return (
       <View style={styles.detailPreview}>

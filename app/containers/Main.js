@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import styles from '../styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -55,10 +57,39 @@ class Main extends Component {
     // this.props.action.sendVote(voteObj);
   }
 
+  exitARImageMode() {
+    this.props.action.switchARImageMode(false);
+    this.props.action.openPreview(this.props.focalPlace);
+
+    let positionObj = {
+      latitude: this.props.currentPosition.latitude,
+      longitude: this.props.currentPosition.longitude,
+      threejsLat: this.props.threejsLat,
+      threejsLon: this.props.threejsLon
+    };
+
+
+    this.props.action.fetchPlaces(positionObj)
+    .then(() => {this.props.action.userPlacesQuery(positionObj)});
+  }
+
   renderPreview() {
     if (this.props.preview) {
       return (
         <SmallDetailView closePanel={() => {this.props.action.closePreview();}} place={this.props.places[this.props.focalPlace]} submitVote={this.submitVote.bind(this)}/>
+      );
+    }
+    return;
+  }
+
+  renderARImageModeCloseBtn() {
+    if (this.props.ARImageMode === true) {
+      return (
+        <TouchableOpacity onPress={() => {this.exitARImageMode();}}>
+          <View style={styles.button}>
+            <Image style={styles.objectButton} source={require('../assets/close.png')}/>
+          </View>
+        </TouchableOpacity>
       );
     }
     return;
@@ -103,6 +134,7 @@ class Main extends Component {
           pressCreate={() => {this.props.action.drawerState('Create'); this._drawer.open();}}
         />
         {this.renderPreview()}
+        {this.renderARImageModeCloseBtn()}
       </Drawer>
     );
   }
@@ -114,7 +146,12 @@ const mapStateToProps = function(state) {
     user: state.user,
     drawer: state.drawer.option,
     preview: state.detail.preview,
-    focalPlace: state.detail.focalPlace
+    focalPlace: state.detail.focalPlace,
+    ARImageMode: state.detail.ARImageMode,
+
+    currentPosition: state.Geolocation.currentPosition,
+    threeLat: state.Geolocation.threeLat,
+    threeLon: state.Geolocation.threeLon,
   };
 };
 

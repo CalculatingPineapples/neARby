@@ -1,11 +1,15 @@
 import { DETAIL_SELECTED } from '../actions/index';
 import { PREVIEW_PANEL_OPEN } from '../actions/index';
 import { PREVIEW_PANEL_CLOSE } from '../actions/index';
+import { AR_IMAGE_MODE } from '../actions/index';
+import { INSIDE_AR_IMAGE_MODE } from '../actions/index';
 
 const initialState = {
   selectedEvent: null,
   preview: false,
-  focalPlace: null
+  focalPlace: null,
+  ARImageMode: false,
+  insideARImageMode: false
 };
 
 export default function(state = initialState, action) {
@@ -22,6 +26,14 @@ export default function(state = initialState, action) {
   	case PREVIEW_PANEL_CLOSE:
       return { ...state,
       	preview: false
+      };
+    case AR_IMAGE_MODE:
+      return { ...state,
+        ARImageMode: action.payload
+      };
+    case INSIDE_AR_IMAGE_MODE:
+      return { ...state,
+        insideARImageMode: action.payload
       };
     default:
       return state;

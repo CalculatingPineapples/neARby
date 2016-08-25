@@ -2,7 +2,7 @@ const RenderScene =
 `
   <script>
     var camera, controls, animate, heading, scene, headingUpdate, openingGroup;
-    var angleDifference, newAngleDifference, calibrating, errorDifference;
+    var angleDifference, newAngleDifference, calibrating, errorDifference, errorDifferenceCounter;
     var loading = true;
     window.divs = [];
     (function() {

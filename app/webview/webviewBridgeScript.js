@@ -83,6 +83,7 @@ export const injectScript = `
           // WebViewBridge.send(JSON.stringify("in WebViewBridge, got currentHeading"));
 
         } else if (message.type === 'images') {
+          window.alert('images mode');
           window.clearScene();
           var images = message.images;
           images.forEach(function(image) {

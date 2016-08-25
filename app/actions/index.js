@@ -436,3 +436,23 @@ export const sendVote = (place) => {
     payload: collection
   };
 };
+
+//////////////////////////////
+////AR image mode handler
+//////////////////////////////
+export const AR_IMAGE_MODE = 'AR_IMAGE_MODE';
+export const INSIDE_AR_IMAGE_MODE = 'INSIDE_AR_IMAGE_MODE';
+
+export const switchARImageMode = (boolean) => {
+  return {
+    type: AR_IMAGE_MODE,
+    payload: boolean
+  };
+};
+
+export const insideARImageMode = (boolean) => {
+  return {
+    type: INSIDE_AR_IMAGE_MODE,
+    payload: boolean
+  };
+};
