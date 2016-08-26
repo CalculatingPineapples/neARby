@@ -43,13 +43,14 @@ class ARcomponent extends Component {
 
   componentWillReceiveProps(nextProps) {
     //rerender places only when placeUpdate is true;
+    // console.log('nextProps.placeUpdate', nextProps.placeUpdate);
     if (!nextProps.ARImageMode && this.sendPlacesToWebView && nextProps.placeUpdate) {
       this.sendPlacesToWebView(nextProps.places);
       this.props.action.resetPlaceUpdate();
     }
 
     if (!nextProps.insideARImageMode && this.activateARImageMode && nextProps.ARImageMode) {
-      console.log('nextProps.insideARImageMode');
+      // console.log('nextProps.insideARImageMode');
       if (Array.isArray(nextProps.focalPlace.img)) {
         this.activateARImageMode(nextProps.focalPlace.img);
       } else {
@@ -106,7 +107,6 @@ class ARcomponent extends Component {
         threejsLon: 0
       };
       this.props.action.fetchPlaces(positionObj)
-      .then(() => {this.props.action.userPlacesQuery(positionObj)})
 
       .catch((err) => {
         //implement error message
@@ -146,7 +146,7 @@ class ARcomponent extends Component {
               totalAPICalls: this.state.totalAPICalls += 1
             });
 
-            console.log('range reached');
+            // console.log('range reached');
             placesCallback(location.coords.latitude, location.coords.longitude, threeJSPosition.deltaX, threeJSPosition.deltaZ);
           }
         }
@@ -226,15 +226,13 @@ class ARcomponent extends Component {
 
       //if there are searches for events for places, keep fetching those searches
       if (this.props.searchMode === 'none') {
-        console.log('rangereached fetch');
+        // console.log('rangereached fetch');
         this.props.action.fetchPlaces(positionObj)
-        .then(this.props.action.userPlacesQuery(positionObj));
       } else if (this.props.searchMode === 'places') {
-        console.log('rangereached places fetch');
+        // console.log('rangereached places fetch');
         this.props.action.placeQuery(this.props.placeQuery)
-        .then(this.props.action.userPlacesQuery(this.props.placeQuery));
       } else if (this.props.searchMode === 'events') {
-        console.log('rangereached places fetch');
+        // console.log('rangereached places fetch');
         var clone = Object.assign({}, this.props.eventQuery);
         clone.latitude = this.props.currentPosition.latitude;
         clone.longitude = this.props.currentPosition.longitude;
@@ -261,7 +259,7 @@ class ARcomponent extends Component {
       //calibrate threejs camera according to north every 5 seconds
       this.sendOrientation(this.calibrateCameraAngle);
     } else if (message.type === 'click') {
-        console.log('openPreviewopenPreview', this.props.places[message.key]);
+        // console.log('openPreviewopenPreview', this.props.places, message.key, this.props.places[message.key]);
       if (this.props.places[message.key].type && (this.props.places[message.key].type === 'userPlace' || this.props.places[message.key].type === 'userEvent')) {
         this.props.action.openPreview(this.props.places[message.key]);
       } else {
@@ -279,7 +277,7 @@ class ARcomponent extends Component {
   }
 
   exitARImageMode() {
-    console.log('exitARImageMode');
+    // console.log('exitARImageMode');
     this.props.action.switchARImageMode(false);
     this.props.action.insideARImageMode(false);
     this.props.action.openPreview(this.props.focalPlace);
@@ -293,7 +291,6 @@ class ARcomponent extends Component {
 
 
     this.props.action.fetchPlaces(positionObj)
-    .then(() => {this.props.action.userPlacesQuery(positionObj)});
   }
 
   renderARImageModeCloseBtn() {

@@ -44,13 +44,12 @@ export const injectScript = `
         } else if (message.type === "initialHeading") {
           // window.alert('initialHeading');
           angleDifference = message.heading;
-          // openingGroup.rotation.y -= (360 - angleDifference) * (Math.PI / 180);
+          loading = false;
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
           // window.alert('places');
           var places = message.places;
-          loading = false;
           window.clearScene();
           window.divs = [];
 
@@ -65,7 +64,7 @@ export const injectScript = `
         } else if (message.type === 'images') {
           // window.alert('images mode');
           window.clearScene();
-          var images = message.images.slice(0,20);
+          var images = message.images.slice(0,30);
           images.forEach(function(image) {
             window.createImage(image);
           })

@@ -57,6 +57,16 @@ class SmallDetailView extends Component {
       images = this.props.photos;
     }
 
+    if (images.length === 0) {
+      return (
+        <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'}}>
+            <Image source={require('../assets/no_image_available.png')} style={styles.images}/>
+          </View>
+        </ScrollView>
+      );
+    }
+
     return (
       <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row'}}>
