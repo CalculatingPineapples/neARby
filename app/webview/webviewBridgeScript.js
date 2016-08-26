@@ -43,8 +43,8 @@ export const injectScript = `
 
         } else if (message.type === "initialHeading") {
           // window.alert('initialHeading');
-
           angleDifference = message.heading;
+          // openingGroup.rotation.y -= (360 - angleDifference) * (Math.PI / 180);
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
@@ -56,15 +56,6 @@ export const injectScript = `
 
           places.forEach(function(place, key) {
             window.createPlace(place.lat, place.lon, place.name, place.distance, key, place.type);
-            // if (place.type && (place.type === 'userPlace')) {
-            //   // var torus = new THREE.TorusGeometry( 2, .5, 10, 25 );
-            //   addCubeHere(place.lat, place.lon, "rgb(255, 0, 0)", torus);
-            // } else if (place.type && (place.type === 'userEvent')) {
-            //   // var diamond = new THREE.OctahedronGeometry( 2, 0 );
-            //   addCubeHere(place.lat, place.lon, "rgb(255, 255, 0)", diamond);
-            // } else {
-            //   window.createPlace(place.lat, place.lon, place.name, place.distance, key);
-            // }
           });
 
         } else if (message.type === 'currentHeading') {
