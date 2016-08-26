@@ -79,7 +79,7 @@ class CreatePanel extends Component {
 
     Promise.all(uploadPromises)
     .then((results) => {
-      console.log('results', results);
+      // console.log('results', results);
       obj.img = results;
       this.props.action.addPlace(obj);
       this.resetState();
@@ -114,7 +114,7 @@ class CreatePanel extends Component {
 
     Promise.all(uploadPromises)
     .then((results) => {
-      console.log('results', results);
+      // console.log('results', results);
       obj.img = results;
       this.props.action.addEvent(obj);
       this.resetState();
@@ -153,7 +153,7 @@ class CreatePanel extends Component {
 
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -163,7 +163,7 @@ class CreatePanel extends Component {
 
       } else {
         const source = {uri: response.uri.replace('file://', ''), fileSize: response.fileSize, isStatic: true};
-        console.log('source', JSON.stringify(source));
+        // console.log('source', JSON.stringify(source));
         if (this.state.createType === 'place') {
           this.setState({
             placePics: this.state.placePics.concat([source])
@@ -276,10 +276,10 @@ const sendSpotToServer = (type, obj) => {
   let endPoint;
 
   if (type === 'createPlace') {
-    console.log('creating place: ', obj);
+    // console.log('creating place: ', obj);
     endPoint = 'createPlace';
   } else if (type === 'createEvent') {
-    console.log('creating event: ', obj);
+    // console.log('creating event: ', obj);
     endPoint = 'createEvent';
   }
 

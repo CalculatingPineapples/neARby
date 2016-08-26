@@ -58,7 +58,7 @@ export default function(state = initialState, action) {
         searchMode: 'places'
       };
     case SEARCH_EVENTS:
-    console.log(action.payload, 'event query');
+    // console.log(action.payload, 'event query');
       return {
         ...state,
         places: action.payload,

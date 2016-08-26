@@ -41,8 +41,3 @@ export const calculateDistance = (prevCoords, currentCoords) => {
     distance: distance
   };
 };
-
-// //37.788250, -122.402619
-// //37.787966, -122.403150
-// let coords1 = {latitude: 37.788250, longitude: -122.402619};
-// let coords2 = {latitude: 37.787966, longitude: -122.403150};

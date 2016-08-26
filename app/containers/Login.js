@@ -107,11 +107,11 @@ let html = `
 class Login extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
   }
 
   componentWillMount () {
-    console.log(AccessToken);
+    // console.log(AccessToken);
     AccessToken.getCurrentAccessToken().then(
       (data) => {
         if (data) {
