@@ -199,12 +199,12 @@ class CreatePanel extends Component {
             </ScrollView>
 
           <View style={styles.buttonContainer}>
-          <TouchableHighlight style={styles.createButton} onPress={this.pickImage.bind(this)}>
+          <TouchableOpacity style={styles.createButton} onPress={this.pickImage.bind(this)}>
             <Text style={styles.createButtonText}>upload picture</Text>
-          </TouchableHighlight>
-            <TouchableHighlight style={styles.createButton} onPress={() => { this.handleSubmitPlace(); }}>
+          </TouchableOpacity>
+            <TouchableOpacity style={styles.createButton} onPress={() => { this.handleSubmitPlace(); }}>
               <Text style={styles.createButtonText}>add spot</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       );

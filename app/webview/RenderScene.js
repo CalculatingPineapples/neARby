@@ -81,6 +81,11 @@ const RenderScene =
           };
         }
 
+        var getPointInBetweenByLen = function (pointA, pointB, length) {
+            var dir = pointB.clone().sub(pointA).normalize().multiplyScalar(length);
+            return pointA.clone().add(dir);
+        }
+
         window.createPlace = function(lat, long, name, distance, key, type) {
           var bitmap = document.createElement('canvas');
           var g = bitmap.getContext('2d');
@@ -138,8 +143,12 @@ const RenderScene =
           var mat = new THREE.MeshBasicMaterial({transparent: true, opacity: 0.75, map: texture});
           var cube = new THREE.Mesh(geo, mat);
           cube.position.set(long, 0, -1 * lat);
-          cube.position.normalize();
-          cube.position.multiplyScalar(3);
+
+          var normalized = getPointInBetweenByLen(camera.position, cube.position, 3);
+          cube.position.set(normalized.x, normalized.y, normalized.z);
+          
+          // cube.position.normalize();
+          // cube.position.multiplyScalar(3);
           cube.lookAt(camera.position);
           cube.userData.index = key;
           cube.userData.direction = [1, -1][Math.floor(Math.random() * 2)];
@@ -156,6 +165,7 @@ const RenderScene =
 
 
         var touchHandler = function(event) {
+          window.alert('asdfasdfa');
           event.preventDefault();
           event.clientX = event.touches[0].clientX;
           event.clientY = event.touches[0].clientY;

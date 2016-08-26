@@ -259,7 +259,7 @@ class ARcomponent extends Component {
       //calibrate threejs camera according to north every 5 seconds
       this.sendOrientation(this.calibrateCameraAngle);
     } else if (message.type === 'click') {
-        // console.log('openPreviewopenPreview', this.props.places, message.key, this.props.places[message.key]);
+        console.log('openPreviewopenPreview', this.props.places, message.key, this.props.places[message.key]);
       if (this.props.places[message.key].type && (this.props.places[message.key].type === 'userPlace' || this.props.places[message.key].type === 'userEvent')) {
         this.props.action.openPreview(this.props.places[message.key]);
       } else {
@@ -324,21 +324,21 @@ class ARcomponent extends Component {
             <Image style={styles.search} source={require('../assets/search.png')}/>
           </View>
         </TouchableOpacity>
-        <TouchableHighlight style={styles.menu} onPress={this.props.pressList}>
+        <TouchableOpacity style={styles.menu} onPress={this.props.pressList}>
           <View style={styles.button}>
             <Image style={styles.search} source={require('../assets/link.png')}/>
           </View>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.menu} onPress={this.props.pressCreate}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menu} onPress={this.props.pressCreate}>
           <View style={styles.button}>
             <Image style={styles.objectButton} source={require('../assets/plus.png')}/>
           </View>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.menu} onPress={this.props.pressProfile}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menu} onPress={this.props.pressProfile}>
           <View style={styles.button}>
             <Image style={styles.userimg} source={{uri: this.props.user.picture}}/>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   }
