@@ -41,7 +41,6 @@ class ListPanel extends Component {
 }
 
 const mapStateToProps = function(state) {
-  console.log('map state to props is called, this is state: ', state);
   return {
     places: state.places.places,
     detail: state.detail
@@ -49,7 +48,6 @@ const mapStateToProps = function(state) {
 };
 
 const mapDispatchToProps = function(dispatch) {
-  console.log('map dispatch to props is called');
   return {
     action: bindActionCreators({ drawerState, selectPlace, imageQuery, directionsQuery }, dispatch)
   };

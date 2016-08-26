@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 class SearchPanel extends Component {
   constructor(props) {
     super(props);
-    console.log(this, 'search');
+    // console.log(this, 'search');
   }
 
   resetSearch() {

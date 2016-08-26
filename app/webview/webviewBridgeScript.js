@@ -43,28 +43,18 @@ export const injectScript = `
 
         } else if (message.type === "initialHeading") {
           // window.alert('initialHeading');
-
           angleDifference = message.heading;
+          loading = false;
           WebViewBridge.send(JSON.stringify("heading received"));
 
         } else if (message.type === 'places') {
           // window.alert('places');
           var places = message.places;
-          loading = false;
           window.clearScene();
           window.divs = [];
 
           places.forEach(function(place, key) {
             window.createPlace(place.lat, place.lon, place.name, place.distance, key, place.type);
-            // if (place.type && (place.type === 'userPlace')) {
-            //   // var torus = new THREE.TorusGeometry( 2, .5, 10, 25 );
-            //   addCubeHere(place.lat, place.lon, "rgb(255, 0, 0)", torus);
-            // } else if (place.type && (place.type === 'userEvent')) {
-            //   // var diamond = new THREE.OctahedronGeometry( 2, 0 );
-            //   addCubeHere(place.lat, place.lon, "rgb(255, 255, 0)", diamond);
-            // } else {
-            //   window.createPlace(place.lat, place.lon, place.name, place.distance, key);
-            // }
           });
 
         } else if (message.type === 'currentHeading') {
@@ -74,7 +64,7 @@ export const injectScript = `
         } else if (message.type === 'images') {
           // window.alert('images mode');
           window.clearScene();
-          var images = message.images.slice(0,20);
+          var images = message.images.slice(0,30);
           images.forEach(function(image) {
             window.createImage(image);
           })

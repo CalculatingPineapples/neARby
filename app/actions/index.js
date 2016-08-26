@@ -15,7 +15,7 @@ export const RESET_PLACES_UPDATE = 'RESET_PLACES_UPDATE';
 
 const herokuServer = 'https://agile-peak-45133.herokuapp.com/';
 const localServer = 'http://10.6.23.239:3000/';
-const server = herokuServer;
+const server = localServer;
 const redisServer = localServer;
 
 export const fetchPlaces = (position) => {
@@ -29,7 +29,7 @@ export const fetchPlaces = (position) => {
   })
   .then(function(response) {
     if (response.status === 200) {
-      console.log(response);
+      // console.log(response);
       return response.json();
     } else  {
       return [];
@@ -48,7 +48,7 @@ export const fetchPlaces = (position) => {
 };
 
 export const placeQuery = (query) => {
-  console.log('test the placeQuery out')
+  // console.log('test the placeQuery out')
   // post request
   let search = fetch(`${server}places`, {
     method: 'POST',
@@ -133,7 +133,7 @@ export const userEventQuery = (query) => {
 
 export const userPlacesQuery = (query) => {
   // post request
-  console.log('test the user place query out')
+  // console.log('test the user place query out')
     let search = fetch(`${redisServer}db/getPlaces`, {
     method: 'POST',
     headers: {
@@ -153,7 +153,7 @@ export const userPlacesQuery = (query) => {
     console.error(error);
     return [];
   });
-  console.log('testing userPlaceQuery', search);
+  // console.log('testing userPlaceQuery', search);
   return {
     type: USER_PLACES,
     payload: search
@@ -186,7 +186,7 @@ export const imageQuery = (query) => {
   })
   .then(function(response) {
     if (response.status === 200) {
-      console.log(response);
+      // console.log(response);
       return response.json();
     } else  {
       return [];
@@ -243,7 +243,7 @@ export const getUserInfo = (err, data) => {
   if (err) {
     console.log('ERR ', err);
   } else {
-    console.log(data, 'data');
+    // console.log(data, 'data');
     return {
       type: SET_USER,
       payload: {
@@ -344,7 +344,7 @@ export const addPlace = (place) => {
   .catch(function(error) {
     console.error('error adding Places: ', error);
   });
-  console.log('testing addPlace', search)
+  // console.log('testing addPlace', search);
   return {
     type: USER_PLACES,
     payload: search
@@ -383,7 +383,7 @@ export const PREVIEW_PANEL_OPEN = 'PREVIEW_PANEL_OPEN';
 export const PREVIEW_PANEL_CLOSE = 'PREVIEW_PANEL_CLOSE';
 
 export const openPreview = (place) => {
-  console.log('openPreview', place);
+  // console.log('openPreview', place);
   return {
     type: PREVIEW_PANEL_OPEN,
     payload: place
@@ -391,7 +391,7 @@ export const openPreview = (place) => {
 };
 
 export const closePreview = () => {
-  console.log('closePreview');
+  // console.log('closePreview');
   return {
     type: PREVIEW_PANEL_CLOSE,
     payload: {
@@ -406,7 +406,7 @@ export const closePreview = () => {
 export const UPDATE_VOTE = 'UPDATE_VOTE';
 
 export const sendVote = (place) => {
-  console.log('votePlace', place);
+  // console.log('votePlace', place);
   let endpoint;
 
   if (place.type === 'userPlace') {
@@ -425,7 +425,7 @@ export const sendVote = (place) => {
   })
   .then(function(response) {
     if (response.status === 200) {
-      console.log('response', response);
+      // console.log('response', response);
       return response.json();
     } else  {
       console.log('error');

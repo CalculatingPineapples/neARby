@@ -43,7 +43,7 @@ class Main extends Component {
   }
 
   submitVote(vote) {
-    console.log('submitVote');
+    // console.log('submitVote');
     let focalPlace = this.props.places[this.props.focalPlace];
     let username = this.props.user.username;
     let voteObj = {

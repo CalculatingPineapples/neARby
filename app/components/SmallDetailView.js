@@ -42,7 +42,7 @@ class SmallDetailView extends Component {
   }
 
   enterARImageMode() {
-    console.log('enterARImageMode');
+    // console.log('enterARImageMode');
     this.props.action.switchARImageMode(true);
     this.props.closePanel();
   }
@@ -55,6 +55,16 @@ class SmallDetailView extends Component {
       images = this.props.place.img;
     } else {
       images = this.props.photos;
+    }
+
+    if (images.length === 0) {
+      return (
+        <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'}}>
+            <Image source={require('../assets/no_image_available.png')} style={styles.images}/>
+          </View>
+        </ScrollView>
+      );
     }
 
     return (

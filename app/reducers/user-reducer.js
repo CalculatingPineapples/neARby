@@ -10,8 +10,8 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-    console.log('in user reducer');
-    console.log(action.payload);
+    // console.log('in user reducer');
+    // console.log(action.payload);
       return { ...state,
       username: action.payload.username,
       picture: action.payload.picture,

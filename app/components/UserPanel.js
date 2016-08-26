@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image,
   MapView,
-  ListView
 } from 'react-native';
 import FBSDK, { LoginButton } from 'react-native-fbsdk';
 import styles from '../styles/style';

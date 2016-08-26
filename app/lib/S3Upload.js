@@ -22,7 +22,7 @@ const uploadImage = (uri, type, fileSize) => {
 		if (response.status !== 201) {
 		  throw new Error('Failed to upload image to S3');
 		}
-		console.log('response.status', response);
+		// console.log('response.status', response);
 		return response.body.postResponse.location;
 	})
 	.catch(error => {

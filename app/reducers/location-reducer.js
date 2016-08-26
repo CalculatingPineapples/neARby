@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
       };
 
     case CURRENT_POSITION_UPDATE:
-      console.log('action.payload', action.payload);
+      // console.log('action.payload', action.payload);
       return { ...state,
         currentPosition: action.payload.currentPosition,
         threeLat: action.payload.threeLat,

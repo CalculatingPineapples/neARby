@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux';
 class EventPanel extends Component {
   constructor(props) {
     super(props);
-    console.log(props, 'panelProps');
+    // console.log(props, 'panelProps');
     this.state = {
       business: false,
       family: false,

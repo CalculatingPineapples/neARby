@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
       	selectedEvent: action.payload.selectedEvent,
       };
   	case PREVIEW_PANEL_OPEN:
-      console.log('preview action.payload', action.payload);
+      // console.log('preview action.payload', action.payload);
       return { ...state,
       	focalPlace: action.payload,
       	preview: true
